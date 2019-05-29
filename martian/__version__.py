@@ -12,6 +12,7 @@ __name__        = 'Martian'
 __description__ = '''A program for Caltech Library staff to download MARC records from caltech.tind.io.'''
 __url__         = 'https://github.com/caltechlibrary/martian'
 __author__      = 'Michael Hucka <mhucka@caltech.edu>'
+__credits__     = ['Michael Hucka']
 __email__       = 'mhucka@caltech.edu'
 __license__     = 'BSD 3-clause license -- see LICENSE file'
 __copyright__   = 'Copyright (C) 2019 by the California Institute of Technology'
