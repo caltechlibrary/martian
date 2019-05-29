@@ -1,21 +1,40 @@
 Martian<img width="12%" align="right" src=".graphics/martian-logo.svg">
 =======
 
-Martian searches Caltech's TIND.io database with a user query and downloads the MARC records produced. _Martian_ is a loose acronym for _**<ins>MAR</ins>C from <ins>TI</ins>ND <ins>A</ins>ssista<ins>n</ins>t**_.
+_Martian_ searches Caltech's TIND.io database with a user query and downloads the MARC records produced. The name "Martian" is a loose acronym for _**<ins>MAR</ins>C from <ins>TI</ins>ND <ins>A</ins>ssista<ins>n</ins>t**_.
 
 *Authors*:      [Michael Hucka](http://github.com/mhucka)<br>
 *Repository*:   [https://github.com/caltechlibrary/martian](https://github.com/caltechlibrary/martian)<br>
 *License*:      BSD/MIT derivative &ndash; see the [LICENSE](LICENSE) file for more information
 
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg?style=flat-square)](https://choosealicense.com/licenses/bsd-3-clause)
+[![Python](https://img.shields.io/badge/Python-3.4+-brightgreen.svg?style=flat-square)](http://shields.io)
+[![Latest release](https://img.shields.io/badge/Latest_release-0.0.1-b44e88.svg?style=flat-square)](http://shields.io)
+
+
+Table of Contents
+-----------------
+* [Introduction](#-introduction)
+* [Installation instructions](#-installation-instructions)
+* [Basic operation](#︎-basic-operation)
+* [Getting help and support](#-getting-help-and-support)
+* [Do you like it?](#-do-you-like-it)
+* [Acknowledgments](#︎-acknowledgments)
+* [Copyright and license](#︎-copyright-and-license)
+
+
 ☀ Introduction
 -----------------------------
 
-@@EXPLANATION@@
+Caltech's librarians occasionally need to download large numbers of records from Caltech's TIND.io database.  Doing this through TIND's web interface is tedious.  _Martian_ is a program to make this work easier.  It does a simple task: run a query in caltech.tind.io and download all the results in MARC XML format to a file on the local computer.
+
 
 ✺ Installation instructions
 ---------------------------
 
-The following is probably the simplest and most direct way to install this software on your computer:
+The developers provide an installer program for Caltech Library users.  Please contact the developers to get a copy of the installer program for Windows 7, Windows 10, or macOS 10.12+.  Note also that installation of _Martian_ on Windows requires administrator priviledges.
+
+Alternatively, you can also download the source code for Martian and run it directly using a Python interpreter.  The following is probably the simplest and most direct way to install this software on your computer:
 ```sh
 sudo python3 -m pip install git+https://github.com/caltechlibrary/martian.git --upgrade
 ```
@@ -47,7 +66,7 @@ The [vector artwork](https://thenounproject.com/search/?q=martian&i=63049) of a 
 ☮︎ Copyright and license
 ---------------------
 
-Copyright (C) 2018, Caltech.  This software is freely distributed under a BSD/MIT type license.  Please see the [LICENSE](LICENSE) file for more information.
+Copyright (C) 2019, Caltech.  This software is freely distributed under a BSD/MIT type license.  Please see the [LICENSE](LICENSE) file for more information.
     
 <div align="center">
   <a href="https://www.caltech.edu">
