@@ -1,10 +1,10 @@
-@@REPO_NAME@@
-=============
+Martian
+=======
 
-@@SHORT_DESCRIPTION@@
+Martian searches Caltech's TIND.io database with a user query and downloads the MARC records produced. _Martian_ is a loose acronym for _**<ins>MAR</ins>C from <ins>TI</ins>ND <ins>A</ins>ssista<ins>n</ins>t**_.
 
 *Authors*:      [Michael Hucka](http://github.com/mhucka)<br>
-*Repository*:   [https://github.com/caltechlibrary/@@REPO@@](https://github.com/caltechlibrary/@@REPO@@)<br>
+*Repository*:   [https://github.com/caltechlibrary/martian](https://github.com/caltechlibrary/martian)<br>
 *License*:      BSD/MIT derivative &ndash; see the [LICENSE](LICENSE) file for more information
 
 ☀ Introduction
@@ -17,13 +17,13 @@
 
 The following is probably the simplest and most direct way to install this software on your computer:
 ```sh
-sudo python3 -m pip install git+https://github.com/caltechlibrary/@@REPO@@.git --upgrade
+sudo python3 -m pip install git+https://github.com/caltechlibrary/martian.git --upgrade
 ```
 
 Alternatively, you can clone this GitHub repository and then run `setup.py`:
 ```sh
-git clone https://github.com/caltechlibrary/@@REPO@@.git
-cd @@REPO@@
+git clone https://github.com/caltechlibrary/martian.git
+cd martian
 sudo python3 -m pip install . --upgrade
 ```
 
@@ -35,7 +35,7 @@ sudo python3 -m pip install . --upgrade
 ⁇ Getting help and support
 --------------------------
 
-If you find an issue, please submit it in [the GitHub issue tracker](https://github.com/caltechlibrary/@@REPO@@/issues) for this repository.
+If you find an issue, please submit it in [the GitHub issue tracker](https://github.com/caltechlibrary/martian/issues) for this repository.
 
 
 ☮︎ Copyright and license
