@@ -150,10 +150,10 @@ class MessageHandlerGUI(MessageHandlerBase):
             short = text + '\n\nWould you like to try to continue?\n(Click "no" to quit now.)'
             style = wx.YES_NO | wx.YES_DEFAULT | wx.HELP | wx.ICON_EXCLAMATION
         dlg = wx.MessageDialog(frame, message = short, style = style,
-                               caption = "Lost it! has encountered a problem")
+                               caption = "Martian has encountered a problem")
         clicked = dlg.ShowModal()
         if clicked == wx.ID_HELP:
-            body = ("Lost it! has encountered a problem:\n"
+            body = ("Martian has encountered a problem:\n"
                     + "─"*30
                     + "\n{}\n".format(details or text)
                     + "─"*30
