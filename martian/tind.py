@@ -15,6 +15,7 @@ file "LICENSE" for more information.
 '''
 
 from   bs4 import BeautifulSoup
+import humanize
 from   lxml import html
 from   pycurl import Curl
 import re
@@ -100,9 +101,9 @@ class Tind(object):
             notifier.fatal('Received unexpected content from TIND', details)
 
         # The 2nd <td> of class 'searchresultsboxheader' contains the number.
-        match = re.search('<span><strong>([0-9]+)</strong> records found', str(tds[1]))
-        if match.group(1):
-            num_records = int(match.group(1))
+        match = re.search('<span><strong>([0-9,]+)</strong> records found', str(tds[1]))
+        if match and match.group(1):
+            num_records = int(match.group(1).replace(',', ''))
         else:
             notifier.fatal('Unexpected result from TIND: could not find number of records')
             raise InternalError(details)
@@ -110,7 +111,8 @@ class Tind(object):
             notifier.info('This TIND search produced 0 records')
             return
         else:
-            tracer.update('The search will produce {} records'.format(num_records))
+            text_number = humanize.intcomma(num_records)
+            tracer.update('The search will produce {} records'.format(text_number))
 
         # OK, now let's loop.
         if total < 0:
