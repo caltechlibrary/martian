@@ -6,7 +6,7 @@
 # @website https://github.com/caltechlibrary/martian
 # =============================================================================
 
-__version__     = '0.0.1'
+__version__     = '1.0.0'
 __title__       = 'martian'
 __name__        = 'Martian'
 __description__ = '''A program for Caltech Library staff to download MARC records from caltech.tind.io.'''
