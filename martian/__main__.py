@@ -17,10 +17,13 @@ file "LICENSE" for more information.
 import os
 import os.path as path
 import plac
+from   pubsub import pub
+from   queue import Queue
 import sys
 import time
 from   threading import Thread
 import traceback
+import wx
 
 import martian
 from martian.control import MartianControlGUI, MartianControlCLI
@@ -30,7 +33,7 @@ from martian.files import desktop_path, rename_existing, file_in_use
 from martian.messages import MessageHandlerGUI, MessageHandlerCLI
 from martian.network import network_available
 from martian.progress import ProgressIndicatorGUI, ProgressIndicatorCLI
-from martian.tind import search_and_download
+from martian.tind import Tind
 
 
 # Main program.
@@ -99,7 +102,7 @@ option -q (or /q on Windows) is given to make it more quiet.
     if output == 'O':
         output = None
     if total and total == 'M':
-        total = None
+        total = -1
     if start_at and start_at == 'N':
         start_at = 1
     if search:
@@ -158,17 +161,18 @@ class MainBody(Thread):
         tracer.start('Performing initial checks')
         if not network_available():
             notifier.fatal('No network connection.')
+        if not controller.is_gui and not search:
+            notifier.fatal('No search query string given.')
+            tracer.stop('Quitting.')
+            controller.stop()
 
         # If we get this far, we're ready to do this thing.
         try:
             if controller.is_gui:
                 tracer.update('Asking user for input & output info')
-                (search, output) = None, "/tmp/out.xml"
-            elif not search:
-                notifier.fatal('No search query string given.')
-                tracer.stop('Quitting.')
-                controller.stop()
-
+                (search, output) = self.get_user_input(search, output)
+                if __debug__: log('search string: {}', search)
+                if __debug__: log('setting output to {}', output)
             if not output:
                 if __debug__: log('setting output file to default')
                 output = path.join(desktop_path(), "output.xml")
@@ -178,9 +182,10 @@ class MainBody(Thread):
                 details = '{} appears to be open in another program'.format(output)
                 notifier.warn('Cannot write output file -- is it still open?', details)
 
-            tracer.update('Downloading results from caltech.tind.io')
-            search_and_download(search, output)
-            tracer.update('Done. Output is in {}'.format(output))
+            tracer.update('Beginning interaction with caltech.tind.io')
+            tind = Tind(controller, notifier, tracer, debug)
+            tind.search_and_download(search, output, start_at, total)
+            notifier.info('Done. Output is in {}'.format(output))
         except (KeyboardInterrupt, UserCancelled) as err:
             tracer.stop('Quitting.')
             controller.stop()
@@ -197,6 +202,18 @@ class MainBody(Thread):
         else:
             tracer.stop('Done')
             controller.stop()
+
+
+    def get_user_input(self, search, output):
+        results = Queue()
+        if __debug__: log('sending message to user_dialog')
+        wx.CallAfter(pub.sendMessage, "user_dialog", results = results,
+                     search = search, output = output)
+        if __debug__: log('blocking to get results')
+        results_tuple = results.get()
+        if __debug__: log('user input obtained')
+        # Results will be a tuple of user, password, cancelled
+        return (results_tuple[0], results_tuple[1])
 
 
 # On windows, we want the command-line args to use slash intead of hyphen.
