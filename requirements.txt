@@ -1,5 +1,6 @@
 Pypubsub>=4.0.0
 beautifulsoup4>=4.7.1
+certifi>=2018.8.24
 colorama>=0.3.9
 halo>=0.0.18
 humanize>=0.5.1
