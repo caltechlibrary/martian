@@ -89,7 +89,7 @@ from martian.tind import Tind
     no_gui     = ('do not start the GUI interface (default: do)',   'flag',   'G'),
     version    = ('print version info and exit',                    'flag',   'V'),
     debug      = ('turn on debugging',                              'flag',   'Z'),
-    search     = 'complete search URL (default: none)',
+    search     = 'search string or complete search URL (default: none)',
 )
 
 def main(output = 'O', start_at = 'N', total = 'M', no_color = False,
