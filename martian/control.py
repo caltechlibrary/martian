@@ -325,9 +325,10 @@ class UserDialog(wx.Dialog):
         self.search.Bind(wx.EVT_TEXT, self.on_input)
 
         self.output_label = wx.StaticText(panel, wx.ID_ANY, "Output file: ", style = wx.ALIGN_RIGHT)
+        file_picker_height = 32 if not sys.platform.startswith('win') else 25
         self.output = wx.FilePickerCtrl(panel, message = "Save downloaded records",
                                         style = wx.FLP_USE_TEXTCTRL | wx.FLP_SAVE,
-                                        size = (340, 32))
+                                        size = (340, file_picker_height))
         self.output.Bind(wx.EVT_FILEPICKER_CHANGED, self.on_input)
 
         self.bottom_line = wx.StaticLine(panel, wx.ID_ANY)
@@ -367,7 +368,8 @@ class UserDialog(wx.Dialog):
         self.user_dialog_sizer = wx.FlexGridSizer(2, 2, 5, 0)
         self.user_dialog_sizer.Add(self.search_label, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL, 0)
         self.padding_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        self.padding_sizer.AddSpacer(5)
+        if not sys.platform.startswith('win'):
+            self.padding_sizer.AddSpacer(5)
         self.padding_sizer.Add(self.search, 0, wx.ALIGN_LEFT | wx.EXPAND, 0)
         self.user_dialog_sizer.Add(self.padding_sizer, 0, wx.ALIGN_LEFT | wx.FIXED_MINSIZE, 0)
         self.user_dialog_sizer.Add(self.output_label, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL, 0)
