@@ -123,43 +123,54 @@ class Tind(object):
         # OK, now let's loop.
         if total < 0:
             total = num_records
+        error = None
+        out = None
         num_written = 0
-        with open(output, 'wb') as out:
+        try:
+            out = open(output, 'wb')
             out.write(b'<?xml version="1.0" encoding="UTF-8"?>\n')
             out.write(b'<collection xmlns="http://www.loc.gov/MARC21/slim">\n')
-            while start_at < total:
+
+            while start_at < total and not error:
                 # The value of end_at is only used for the user message.
                 if start_at + _RECORDS_PER_GET > num_records:
                     end_at = num_records
                 else:
                     end_at = _RECORDS_PER_GET + start_at - 1
                 tracer.update('Getting records {} to {}'.format(start_at, end_at))
+                data = None
+                try:
+                    url = url_for_get(query, _RECORDS_PER_GET, start_at, marc = True)
+                    data = BytesIO()
+                    curl = Curl()
+                    curl.setopt(pycurl.CAINFO, certifi.where())
+                    curl.setopt(curl.URL, url)
+                    curl.setopt(curl.WRITEDATA, data)
+                    curl.perform()
+                    curl.close()
+                except Exception as err:
+                    if __debug__: log('Exception in curl process: {}', str(err))
+                    tracer.update('Stopping download due to problem')
+                    data = None
+                    raise err
 
-                url = url_for_get(query, _RECORDS_PER_GET, start_at, marc = True)
-                buffer = BytesIO()
-                curl = Curl()
-                curl.setopt(pycurl.CAINFO, certifi.where())
-                curl.setopt(curl.URL, url)
-                curl.setopt(curl.WRITEDATA, buffer)
-                curl.perform()
-                curl.close()
+                if data:
+                    # Skip stuff at beginning and end, and write to the file.
+                    v = data.getvalue()
+                    start = v.find(b'<collection xmlns="http://www.loc.gov/MARC21/slim">')
+                    end = v.rfind(b'</collection>')
+                    out.write(v[start + 52 : end])
 
-                # Skip stuff at beginning and end, and write to the file.
-                data = buffer.getvalue()
-                start = data.find(b'<collection xmlns="http://www.loc.gov/MARC21/slim">')
-                end = data.rfind(b'</collection>')
-                out.write(data[start + 52 : end])
-
-                # Increment and continue to get more
-                start_at += _RECORDS_PER_GET
-                num_written = end_at
-
-            # Write final closing bits, and we're done.
-            out.write(b'</collection>')
-            if __debug__: log('download loop finished; closing output file')
-
+                    # Increment and continue to get more
+                    start_at += _RECORDS_PER_GET
+                    num_written = end_at
+            if __debug__: log('download loop finished normally')
+        finally:
+            if __debug__: log('closing output file')
+            if out:
+                out.write(b'</collection>')
+                out.close()
         return num_written
-
 
 
 # Miscellaneous utility functions.
