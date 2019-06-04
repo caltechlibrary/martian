@@ -232,9 +232,16 @@ class MainBody(Thread):
                 (search, output) = self.get_user_input(search, output)
                 if __debug__: log('search string: {}', search)
                 if __debug__: log('setting output to {}', output)
+            if not search:
+                if __debug__: log('No search string given; raising UserCancelled')
+                tracer.update('No search string given -- quitting')
+                raise UserCancelled
             if not output:
-                if __debug__: log('setting output file to default')
                 output = path.join(desktop_path(), "output.xml")
+                tracer.update('No output file specified; using {}'.format(output))
+
+            if not output.endswith('.xml'):
+                output += '.xml'
             if path.exists(output):
                 rename_existing(output)
             if file_in_use(output):
