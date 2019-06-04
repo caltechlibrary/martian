@@ -1,6 +1,48 @@
 '''
 __main__: main command-line interface to Martian
 
+Martian searches caltech.tind.io and downloads the results as MARC XML records.
+
+Martian can be run as either a command-line application or a GUI application.
+By default, Martian starts a GUI to get information from the user and tell
+the user about progress while it runs.  If given the -G option (/G on Windows),
+it does not start the GUI.
+
+When running without the GUI, Martian takes one required argument on the
+command line: the query string to use for the search in TIND.  Alternatively,
+the command-line argument can be a complete search URL as would be typed into
+a web browser (or more practically, copied from the browser address bar after
+performing some exploratory searches in caltech.tind.io).  It is best to
+quote the search string, using double quotes on Windows and single quotes on
+Linux/Unix, to avoid terminal shells interpreting special characters such as
+question marks in the search string.  Example (for Windows):
+
+   martian "https://caltech.tind.io/search?ln=en&p=856%3A%27ebrary%27"
+
+If given the -t option (/t on Windows), it will only fetch and process a
+total of that many results instead of all results.  If given the -s (/s on
+Windows) option, it will start at that entry instead of starting at number 1;
+this is useful if searches are being done in batches or a previous search is
+interrupted and you don't want to restart from 1.
+
+If given an output file using the -o option (/o on Windows), the results will
+be written to that file.  If no output file is specified, the output is
+written to a file named "output.xml" on the user's desktop.  The results are
+always MARC records in XML format.
+
+If given the -Z option (/Z on Windows), this program will print a trace of
+what it is doing to the terminal window, and will also drop into a debugger
+upon the occurrence of any errors.  This can be useful for debugging.
+The option -C (/C on Windows) is useful when running with -Z to avoid the
+default behavior of color-coding the output, so that the combination of
+debugging messages and normal messages is more easily readable.
+
+If given the -V option (/V on Windows), this program will print version
+information and exit without doing anything else.
+
+If given the -h option (/h on Windows), this program will print help
+information and exit without doing anything else.
+
 Authors
 -------
 
@@ -52,15 +94,21 @@ from martian.tind import Tind
 
 def main(output = 'O', start_at = 'N', total = 'M', no_color = False,
          no_gui = False, version = False, debug = False, *search):
-    '''Martian: search caltech.tind.io and download MARC records.
+    '''Search caltech.tind.io and download the results as MARC XML records.
 
-Takes one required argument on the command line: the search query string.
-The string should be a complete search URL as would be typed into a web
-browser address bar (or more practically, copied from the browser address bar
-after performing some exploratory searches in caltech.tind.io).  It is best
-to quote the search string, using double quotes on Windows and single quotes
-on Linux/Unix, to avoid terminal shells interpreting special characters such
-as question marks in the search string.  Example (for Windows):
+Martian can be run as either a command-line application or a GUI application.
+By default, Martian starts a GUI to get information from the user and tell
+the user about progress while it runs.  If given the -G option (/G on Windows),
+it does not start the GUI.
+
+When running without the GUI, Martian takes one required argument on the
+command line: the query string to use for the search in TIND.  Alternatively,
+the command-line argument can be a complete search URL as would be typed into
+a web browser (or more practically, copied from the browser address bar after
+performing some exploratory searches in caltech.tind.io).  It is best to
+quote the search string, using double quotes on Windows and single quotes on
+Linux/Unix, to avoid terminal shells interpreting special characters such as
+question marks in the search string.  Example (for Windows):
 
    martian "https://caltech.tind.io/search?ln=en&p=856%3A%27ebrary%27"
 
@@ -75,8 +123,18 @@ be written to that file.  If no output file is specified, the output is
 written to a file named "output.xml" on the user's desktop.  The results are
 always MARC records in XML format.
 
-This program will print information to the terminal as it runs, unless the
-option -q (or /q on Windows) is given to make it more quiet.
+If given the -Z option (/Z on Windows), this program will print a trace of
+what it is doing to the terminal window, and will also drop into a debugger
+upon the occurrence of any errors.  This can be useful for debugging.
+The option -C (/C on Windows) is useful when running with -Z to avoid the
+default behavior of color-coding the output, so that the combination of
+debugging messages and normal messages is more easily readable.
+
+If given the -V option (/V on Windows), this program will print version
+information and exit without doing anything else.
+
+If given the -h option (/h on Windows), this program will print this help
+message and exit without doing anything else.
 '''
 
     # Our defaults are to do things like color the output, which means the
@@ -185,7 +243,7 @@ class MainBody(Thread):
             tracer.update('Beginning interaction with caltech.tind.io')
             tind = Tind(controller, notifier, tracer, debug)
             tind.search_and_download(search, output, start_at, total)
-            notifier.info('Done. Output is in {}'.format(output))
+            tracer.update('Output is in {}'.format(output))
         except (KeyboardInterrupt, UserCancelled) as err:
             tracer.stop('Quitting.')
             controller.stop()
@@ -201,6 +259,8 @@ class MainBody(Thread):
             controller.stop()
         else:
             tracer.stop('Done')
+            if controller.is_gui:
+                notifier.info('Done. Output is in {}'.format(output))
             controller.stop()
 
 
@@ -216,7 +276,7 @@ class MainBody(Thread):
         return (results_tuple[0], results_tuple[1])
 
 
-# On windows, we want the command-line args to use slash intead of hyphen.
+# On windows, we want the command-line args to use slash instead of hyphen.
 
 if sys.platform.startswith('win'):
     main.prefix_chars = '/'
