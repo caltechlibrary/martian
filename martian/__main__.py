@@ -225,6 +225,7 @@ class MainBody(Thread):
             controller.stop()
 
         # If we get this far, we're ready to do this thing.
+        written = 0
         try:
             if controller.is_gui:
                 tracer.update('Asking user for input & output info')
@@ -242,8 +243,8 @@ class MainBody(Thread):
 
             tracer.update('Beginning interaction with caltech.tind.io')
             tind = Tind(controller, notifier, tracer, debug)
-            tind.search_and_download(search, output, start_at, total)
-            tracer.update('Output is in {}'.format(output))
+            written = tind.search_and_download(search, output, start_at, total)
+            tracer.update('{} records written to {}'.format(written, output))
         except (KeyboardInterrupt, UserCancelled) as err:
             tracer.stop('Quitting.')
             controller.stop()
@@ -260,7 +261,7 @@ class MainBody(Thread):
         else:
             tracer.stop('Done')
             if controller.is_gui:
-                notifier.info('Done. Output is in {}'.format(output))
+                notifier.info('Done. {} records written to {}'.format(written, output))
             controller.stop()
 
 
