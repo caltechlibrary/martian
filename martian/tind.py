@@ -15,8 +15,10 @@ file "LICENSE" for more information.
 '''
 
 from   bs4 import BeautifulSoup
+import certifi
 import humanize
 from   lxml import html
+import pycurl
 from   pycurl import Curl
 import re
 import urllib.parse
@@ -131,6 +133,7 @@ class Tind(object):
                 url = url_for_get(query, _RECORDS_PER_GET, start_at, marc = True)
                 buffer = BytesIO()
                 curl = Curl()
+                curl.setopt(pycurl.CAINFO, certifi.where())
                 curl.setopt(curl.URL, url)
                 curl.setopt(curl.WRITEDATA, buffer)
                 curl.perform()
