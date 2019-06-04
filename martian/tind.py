@@ -67,12 +67,16 @@ class Tind(object):
         '''Search with the given 'search' string and write the output to file
         named by 'output'.  Get 'total' number of records (default: all),
         optionally starting from record number 'start_at' (default: 1).
+        Returns the number of records downloaded, or 0 if something went wrong.
         '''
         tracer   = self._tracer
         notifier = self._notifier
         debug    = self._debug
 
-        if search.startswith('http'):
+        if not search:
+            tracer.update('Given an empty search string -- nothing to do')
+            return 0
+        elif search.startswith('http'):
             # We were given a full url.  Extract just the search part.
             match = re.search('p=([^&]+)', search)
             query = match.group(1)
@@ -111,7 +115,7 @@ class Tind(object):
             raise InternalError(details)
         if num_records == 0:
             notifier.info('This TIND search produced 0 records')
-            return
+            return 0
         else:
             text_number = humanize.intcomma(num_records)
             tracer.update('The search will produce {} records'.format(text_number))
@@ -119,10 +123,11 @@ class Tind(object):
         # OK, now let's loop.
         if total < 0:
             total = num_records
+        num_written = 0
         with open(output, 'wb') as out:
             out.write(b'<?xml version="1.0" encoding="UTF-8"?>\n')
             out.write(b'<collection xmlns="http://www.loc.gov/MARC21/slim">\n')
-            while start_at < num_records:
+            while start_at < total:
                 # The value of end_at is only used for the user message.
                 if start_at + _RECORDS_PER_GET > num_records:
                     end_at = num_records
@@ -147,10 +152,14 @@ class Tind(object):
 
                 # Increment and continue to get more
                 start_at += _RECORDS_PER_GET
+                num_written = end_at
 
             # Write final closing bits, and we're done.
             out.write(b'</collection>')
             if __debug__: log('download loop finished; closing output file')
+
+        return num_written
+
 
 
 # Miscellaneous utility functions.
