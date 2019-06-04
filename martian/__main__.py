@@ -234,7 +234,7 @@ class MainBody(Thread):
                 if __debug__: log('setting output to {}', output)
             if not search:
                 if __debug__: log('No search string given; raising UserCancelled')
-                tracer.update('No search string given -- quitting')
+                tracer.update('No search string given -- nothing to do')
                 raise UserCancelled
             if not output:
                 output = path.join(desktop_path(), "output.xml")
@@ -253,8 +253,13 @@ class MainBody(Thread):
             written = tind.search_and_download(search, output, start_at, total)
             tracer.update('{} records written to {}'.format(written, output))
         except (KeyboardInterrupt, UserCancelled) as err:
-            tracer.stop('Quitting.')
-            controller.stop()
+            # If using the GUI and the user deliberately quit in the input
+            # dialog, we stop what we're doing and leave it to the user to
+            # click the final 'quit' button on the main application in case
+            # they want to use the help.  In cmd-line mode, we just quit now.
+            if not controller.is_gui:
+                tracer.stop('Quitting.')
+                controller.stop()
         except ServiceFailure:
             tracer.stop('Stopping due to a problem connecting to services')
             controller.stop()
@@ -269,7 +274,8 @@ class MainBody(Thread):
             tracer.stop('Done')
             if controller.is_gui:
                 notifier.info('Done. {} records written to {}'.format(written, output))
-            controller.stop()
+            # Don't stop the controller if we reach the end normally, so that
+            # the user can see the trace after the program finishes.
 
 
     def get_user_input(self, search, output):
