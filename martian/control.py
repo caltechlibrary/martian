@@ -72,6 +72,7 @@ import martian
 from martian.files import datadir_path, readable
 from martian.exceptions import *
 from martian.debug import log
+from martian.logo import getMartianLogoIcon
 
 
 # Exported classes.
@@ -271,6 +272,7 @@ class MartianMainFrame(wx.Frame):
         dlg.SetDescription('\n'.join(textwrap.wrap(martian.__description__, 81)))
         dlg.SetWebSite(martian.__url__)
         dlg.AddDeveloper(martian.__author__)
+        dlg.SetIcon(getMartianLogoIcon())
         wx.adv.AboutBox(dlg)
         return True
 
