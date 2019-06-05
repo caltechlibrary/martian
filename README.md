@@ -63,8 +63,19 @@ When installed on a Windows system using the installer provided by the developer
 
 ### Running Martian using the GUI interface
 
+<img align="right" width="50%" src=".graphics/screenshot-first-screen-windows.png">
+
 On Windows or other environment where the GUI version of Martian is available, start Martian normally as you would any other program (e.g., by double-clicking Martian's program icon).
 
+When Martian starts up, it prints some messages about its progress in the main window then immediately brings up a dialog with two fields to be filled in by the user.  The first field ("Search (or URL)") can be either a search string as one would type into the caltech.tind.io search field, or alternatively, a complete search URL (e.g., copied from a web browser's address bar after performing some exploratory searches in caltech.tind.io).  The second field is used to specify where the output should be written.  The output file can be either typed in manually, or the "Browse" button can be used to choose a folder and file name.
+
+After the user types in a search query string and indicates where the output should be written, and clicks the **OK** button, the program does the following behind the scenes:
+
+1. Searches Caltech.tind.io with the query string
+2. Downloads the data returned by TIND in a loop until there is no more data
+3. Writes the output file
+
+Martian prints messages about its progress as it runs.  Program execution can be interrupted by clicking the **Quit** button on the main screen after the first dialog panel is closed.
 
 
 ### Running Martian using the command-line interface
@@ -98,6 +109,25 @@ If you find an issue, please submit it in [the GitHub issue tracker](https://git
 -----------------------
 
 The [vector artwork](https://thenounproject.com/search/?q=martian&i=63049) of an alien spaceship used as a starting point for the logo for this repository was created by [Gonzalo Bravo](https://thenounproject.com/webposible/) for the [Noun Project](https://thenounproject.com).  It is licensed under the Creative Commons [Attribution 3.0 Unported](https://creativecommons.org/licenses/by/3.0/deed.en) license.  The vector graphics was modified by Mike Hucka to change the color.
+
+_Martian_ makes use of numerous open-source packages, without which it would have been effectively impossible to develop _Martian_ with the resources we had.  We want to acknowledge this debt.  In alphabetical order, the packages are:
+
+* [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) &ndash; an HTML parsing library
+* [certifi](https://github.com/certifi/python-certifi) &ndash; Root Certificates for validating the trustworthiness of SSL certificates
+* [colorama](https://github.com/tartley/colorama) &ndash; makes ANSI escape character sequences work under MS Windows terminals
+* [halo](https://github.com/ManrajGrover/halo) &ndash; busy-spinners for Python command-line programs
+* [humanize](https://github.com/jmoiron/humanize) &ndash; make numbers more easily readable by humans
+* [ipdb](https://github.com/gotcha/ipdb) &ndash; the IPython debugger
+* [lxml](https://lxml.de) &ndash; an XML parsing library for Python
+* [plac](http://micheles.github.io/plac/) &ndash; a command line argument parser
+* [pycurl](http://pycurl.io) &ndash; Python interface to libcurl, a library for downloading data identified by URLs
+* [PyInstaller](http://www.pyinstaller.org) &ndash; a packaging program that creates standalone applications from Python programs for Windows, macOS, Linux and other platforms
+* [pypubsub](https://github.com/schollii/pypubsub) &ndash; a publish-and-subscribe message-passing library for Python
+* [requests](http://docs.python-requests.org) &ndash; an HTTP library for Python
+* [setuptools](https://github.com/pypa/setuptools) &ndash; library for `setup.py`
+* [termcolor](https://pypi.org/project/termcolor/) &ndash; ANSI color formatting for output in terminal
+* [urllib3](https://urllib3.readthedocs.io/en/latest/) &ndash; a powerful HTTP library for Python
+* [wxPython](https://wxpython.org) &ndash; a cross-platform GUI toolkit for the Python language
 
 
 ☮︎ Copyright and license
