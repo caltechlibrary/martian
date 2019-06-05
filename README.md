@@ -99,6 +99,16 @@ If given the `-Z` option (`/Z` on Windows), this program will print a trace of w
 If given the `-V` option (`/V` on Windows), this program will print version information and exit without doing anything else.
 
 
+Limitations
+-----------
+
+Here are some of the current limitations of Martian:
+
+* Because Martian gets data from TIND.io in batches of 200 at a time, interrupting Martian while it's running may result in either getting no data at all (if there is less than 200 to download) or getting up to 200 less than what it printed as its current progress point.
+* The GUI interface currently does not provide a way to indicate that Martian should get fewer than the maximum number of records returned by a given search, nor a way to indicate a starting record.  However, the command-line interface does provide options for setting these parameters at run time.
+* The choice of download format (which is MARC XML as produced by TIND.io), and the number of records it attempts to get per iteration (200) are currently fixed and hardwired into the program.
+
+
 ⁇ Getting help and support
 --------------------------
 
