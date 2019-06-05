@@ -27,7 +27,6 @@ import urllib
 from   urllib import request
 from   urllib.parse import urlsplit
 import urllib3
-import validators
 import warnings
 
 from .debug import log
