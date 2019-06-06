@@ -100,13 +100,13 @@ class MartianControlCLI(MartianControlBase):
         return False
 
 
-    def start(self, worker):
+    def run(self, worker):
         self._worker = worker
         if worker:
             worker.start()
 
 
-    def stop(self):
+    def quit(self):
         sys.exit()
 
 
@@ -128,14 +128,14 @@ class MartianControlGUI(MartianControlBase):
         return True
 
 
-    def start(self, worker):
+    def run(self, worker):
         self._worker = worker
         if worker:
             self._worker.start()
         self._app.MainLoop()
 
 
-    def stop(self):
+    def quit(self):
         wx.CallAfter(self._frame.Destroy)
 
 

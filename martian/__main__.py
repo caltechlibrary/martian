@@ -178,8 +178,8 @@ message and exit without doing anything else.
 
     # Start the worker thread.
     if __debug__: log('starting main body thread')
-    controller.start(MainBody(output, total, start_at, search, debug,
-                              controller, notifier, tracer))
+    controller.run(MainBody(output, total, start_at, search, debug,
+                            controller, notifier, tracer))
 
 
 class MainBody(Thread):
@@ -222,7 +222,7 @@ class MainBody(Thread):
         if not controller.is_gui and not search:
             notifier.fatal('No search query string given.')
             tracer.stop('Quitting.')
-            controller.stop()
+            controller.quit()
 
         # If we get this far, we're ready to do this thing.
         written = 0
@@ -263,17 +263,17 @@ class MainBody(Thread):
             # they want to use the help.  In cmd-line mode, we just quit now.
             if not controller.is_gui:
                 tracer.stop('Quitting.')
-                controller.stop()
+                controller.quit()
         except ServiceFailure:
             tracer.stop('Stopping due to a problem connecting to services')
-            controller.stop()
+            controller.quit()
         except Exception as err:
             if debug:
                 import pdb; pdb.set_trace()
             tracer.stop('Stopping due to error')
             notifier.fatal(martian.__title__ + ' encountered an error',
                            str(err) + '\n' + traceback.format_exc())
-            controller.stop()
+            controller.quit()
         else:
             tracer.stop('Done')
             if controller.is_gui:
