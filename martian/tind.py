@@ -123,7 +123,6 @@ class Tind(object):
         # OK, now let's loop.
         if total < 0:
             total = num_records
-        error = None
         out = None
         num_written = 0
         try:
@@ -131,7 +130,7 @@ class Tind(object):
             out.write(b'<?xml version="1.0" encoding="UTF-8"?>\n')
             out.write(b'<collection xmlns="http://www.loc.gov/MARC21/slim">\n')
 
-            while start_at < total and not error:
+            while start_at < total:
                 # The value of end_at is only used for the user message.
                 if start_at + _RECORDS_PER_GET > num_records:
                     end_at = num_records
