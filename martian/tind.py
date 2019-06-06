@@ -56,11 +56,10 @@ URL fragment common to all our search + download calls.
 
 class Tind(object):
 
-    def __init__(self, controller, notifier, tracer, debug = False):
+    def __init__(self, controller, notifier, tracer):
         self._controller = controller
         self._notifier   = notifier
         self._tracer     = tracer
-        self._debug      = debug
 
 
     def search_and_download(self, search, output, start_at = 1, total = -1):
@@ -71,7 +70,6 @@ class Tind(object):
         '''
         tracer   = self._tracer
         notifier = self._notifier
-        debug    = self._debug
 
         if not search:
             tracer.update('Given an empty search string -- nothing to do')
@@ -118,7 +116,7 @@ class Tind(object):
             return 0
         else:
             text_number = humanize.intcomma(num_records)
-            tracer.update('The search will produce {} records'.format(text_number))
+            tracer.update('This search will produce {} records'.format(text_number))
 
         # OK, now let's loop.
         if total < 0:
@@ -148,7 +146,7 @@ class Tind(object):
                     curl.perform()
                     curl.close()
                 except Exception as err:
-                    if __debug__: log('Exception in curl process: {}', str(err))
+                    if __debug__: log('exception in curl process: {}', str(err))
                     tracer.update('Stopping download due to problem')
                     data = None
                     raise err
