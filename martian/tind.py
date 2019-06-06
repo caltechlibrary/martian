@@ -93,7 +93,7 @@ class Tind(object):
         prelim_search = url_for_get(query, num_get = 1, start_at = 1, marc = False)
         (response, error) = net('get', prelim_search)
         if response.status_code > 300:
-            details = 'exception connecting to tind.io: {}'.format(err)
+            details = 'exception connecting to tind.io: {}'.format(error)
             notifier.fatal('Failed to connect to tind.io -- try again later', details)
             raise ServiceFailure(details)
         if error:
