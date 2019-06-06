@@ -229,9 +229,13 @@ class MainBody(Thread):
         try:
             if controller.is_gui:
                 tracer.update('Asking user for input & output info')
-                (search, output) = self.get_user_input(search, output)
+                (search, output, cancelled) = self.get_user_input(search, output)
                 if __debug__: log('search string: {}', search)
                 if __debug__: log('setting output to {}', output)
+            if cancelled:
+                if __debug__: log('user cancelled; raising UserCancelled')
+                tracer.update('Input cancelled by user; stopping.')
+                raise UserCancelled
             if not search:
                 if __debug__: log('No search string given; raising UserCancelled')
                 tracer.update('No search string given -- nothing to do')
@@ -249,7 +253,7 @@ class MainBody(Thread):
                 notifier.warn('Cannot write output file -- is it still open?', details)
 
             tracer.update('Beginning interaction with caltech.tind.io')
-            tind = Tind(controller, notifier, tracer, debug)
+            tind = Tind(controller, notifier, tracer)
             written = tind.search_and_download(search, output, start_at, total)
             tracer.update('{} records written to {}'.format(written, output))
         except (KeyboardInterrupt, UserCancelled) as err:
@@ -287,7 +291,7 @@ class MainBody(Thread):
         results_tuple = results.get()
         if __debug__: log('user input obtained')
         # Results will be a tuple of user, password, cancelled
-        return (results_tuple[0], results_tuple[1])
+        return results_tuple
 
 
 # On windows, we want the command-line args to use slash instead of hyphen.
