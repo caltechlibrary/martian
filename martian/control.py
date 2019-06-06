@@ -448,7 +448,6 @@ class UserDialog(wx.Dialog):
             self._search = self.search.GetValue()
             self._output = self.output.GetPath()
             self.return_values()
-            # self.Destroy()
             self.EndModal(event.EventObject.Id)
         else:
             if __debug__: log('has incomplete inputs')
@@ -459,7 +458,6 @@ class UserDialog(wx.Dialog):
         if __debug__: log('got Cancel')
         self._cancel = True
         self.return_values()
-        # self.Destroy()
         self.EndModal(event.EventObject.Id)
 
 
