@@ -18,9 +18,11 @@ from   bs4 import BeautifulSoup
 import certifi
 import humanize
 from   lxml import html
+from   pubsub import pub
 import pycurl
 from   pycurl import Curl
 import re
+from   threading import Thread
 import urllib.parse
 try:
     from io import BytesIO
@@ -39,7 +41,7 @@ from martian.network import net
 # Some testing with caltech.tind.io reveals that if you ask for more than 200,
 # it returns 200.
 
-_RECORDS_PER_GET = 200
+_RECORDS_PER_GET = 100
 '''
 Number of records to request from TIND at each iteration.  The maximum allowed
 by TIND is 200.
@@ -60,9 +62,11 @@ class Tind(object):
         self._controller = controller
         self._notifier   = notifier
         self._tracer     = tracer
+        self._stop       = False
+        self._downloader = None
 
 
-    def search_and_download(self, search, output, start_at = 1, total = -1):
+    def download(self, search, output, start_at = 1, total = -1):
         '''Search with the given 'search' string and write the output to file
         named by 'output'.  Get 'total' number of records (default: all),
         optionally starting from record number 'start_at' (default: 1).
@@ -84,8 +88,8 @@ class Tind(object):
 
         # TIND doesn't seem to offer a way to find out the number of expected
         # records if you ask for MARC XML output.  So here we start by doing
-        # a normal format TIND search and parsing the HTML to look for the
-        # total results it reports, then loop to get the MARC records.
+        # a normal TIND search and parsing the HTML to look for the total
+        # results it reports, then loop to get the MARC records.
 
         tracer.update('Asking caltech.tind.io how many records to expect')
         prelim_search = url_for_get(query, num_get = 1, start_at = 1, marc = False)
@@ -119,55 +123,74 @@ class Tind(object):
             tracer.update('This search will produce {} records'.format(text_number))
 
         # OK, now let's loop.
+        self._downloader = Thread(target = self._download_loop,
+                                  args = (query, output, start_at, total, num_records, tracer))
+        if __debug__: log('starting downloader thread')
+        self._downloader.start()
+        if __debug__: log('waiting on downloader thread')
+        self._downloader.join()
+        if __debug__: log('downloader thread has returned')
+
+        # Return how many records ended up being written.
+        return self._num_written
+
+
+    def interrupt(self):
+        if __debug__: log('setting the stop flag')
+        self._stop = True
+        if __debug__: log('waiting on downloader thread')
+        if self._downloader:
+            self._downloader.join()
+        if __debug__: log('downloader thread has returned')
+
+
+    def _download_loop(self, query, output, start_at, total, num_records, tracer):
         if total < 0:
             total = num_records
-        out = None
-        num_written = 0
-        try:
-            out = open(output, 'wb')
-            out.write(b'<?xml version="1.0" encoding="UTF-8"?>\n')
-            out.write(b'<collection xmlns="http://www.loc.gov/MARC21/slim">\n')
+        if __debug__: log('opening output file: {}', output)
+        out = open(output, 'wb')
+        out.write(b'<?xml version="1.0" encoding="UTF-8"?>\n')
+        out.write(b'<collection xmlns="http://www.loc.gov/MARC21/slim">\n')
 
-            while start_at < total:
-                # The value of end_at is only used for the user message.
-                if start_at + _RECORDS_PER_GET > num_records:
-                    end_at = num_records
-                else:
-                    end_at = _RECORDS_PER_GET + start_at - 1
-                tracer.update('Getting records {} to {}'.format(start_at, end_at))
+        while start_at < total and not self._stop:
+            # The value of end_at is only used for the user message.
+            if start_at + _RECORDS_PER_GET > num_records:
+                end_at = num_records
+            else:
+                end_at = _RECORDS_PER_GET + start_at - 1
+            tracer.update('Getting records {} to {}'.format(start_at, end_at))
+            data = None
+            try:
+                url = url_for_get(query, _RECORDS_PER_GET, start_at, marc = True)
+                data = BytesIO()
+                curl = Curl()
+                curl.setopt(pycurl.CAINFO, certifi.where())
+                curl.setopt(curl.URL, url)
+                curl.setopt(curl.WRITEDATA, data)
+                if __debug__: log('curling "{}"', url)
+                curl.perform()
+                curl.close()
+            except Exception as err:
+                if __debug__: log('exception in curl process: {}', str(err))
+                tracer.update('Stopping download due to problem')
                 data = None
-                try:
-                    url = url_for_get(query, _RECORDS_PER_GET, start_at, marc = True)
-                    data = BytesIO()
-                    curl = Curl()
-                    curl.setopt(pycurl.CAINFO, certifi.where())
-                    curl.setopt(curl.URL, url)
-                    curl.setopt(curl.WRITEDATA, data)
-                    curl.perform()
-                    curl.close()
-                except Exception as err:
-                    if __debug__: log('exception in curl process: {}', str(err))
-                    tracer.update('Stopping download due to problem')
-                    data = None
-                    raise err
+                raise err
 
-                if data:
-                    # Skip stuff at beginning and end, and write to the file.
-                    v = data.getvalue()
-                    start = v.find(b'<collection xmlns="http://www.loc.gov/MARC21/slim">')
-                    end = v.rfind(b'</collection>')
-                    out.write(v[start + 52 : end])
+            if data:
+                # Skip stuff at beginning and end, and write to the file.
+                v = data.getvalue()
+                start = v.find(b'<collection xmlns="http://www.loc.gov/MARC21/slim">')
+                end = v.rfind(b'</collection>')
+                out.write(v[start + 52 : end])
 
-                    # Increment and continue to get more
-                    start_at += _RECORDS_PER_GET
-                    num_written = end_at
-            if __debug__: log('download loop finished normally')
-        finally:
-            if __debug__: log('closing output file')
-            if out:
-                out.write(b'</collection>')
-                out.close()
-        return num_written
+                # Increment and continue to get more
+                start_at += _RECORDS_PER_GET
+                self._num_written = end_at
+
+        if __debug__: log('closing output due to interruption' if self._stop
+                          else 'closing output file')
+        out.write(b'</collection>\n')
+        out.close()
 
 
 # Miscellaneous utility functions.
