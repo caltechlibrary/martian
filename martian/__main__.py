@@ -62,7 +62,6 @@ import plac
 from   pubsub import pub
 from   queue import Queue
 import sys
-import time
 from   threading import Thread
 import traceback
 import wx
@@ -193,29 +192,30 @@ class MainBody(Thread):
             # Only make this a daemon thread when using the GUI; for CLI, it
             # must not be a daemon thread or else Martian exits immediately.
             self.daemon = True
-        self._output     = output
-        self._total      = total
-        self._start_at   = start_at
-        self._search     = search
-        self._debug      = debug
-        self._controller = controller
-        self._tracer     = tracer
-        self._notifier   = notifier
-        self._tind       = Tind(controller, notifier, tracer)
+        self._output      = output
+        self._total       = total
+        self._start_at    = start_at
+        self._search      = search
+        self._debug       = debug
+        self._controller  = controller
+        self._tracer      = tracer
+        self._notifier    = notifier
+        self._tind        = Tind(controller, notifier, tracer)
+        self._interrupted = False
 
 
     def run(self):
         '''Implementation of Thread object run() method.'''
 
         # Set shortcut variables for better code readability below.
-        output     = self._output
-        total      = self._total
-        start_at   = self._start_at
-        search     = self._search
-        debug      = self._debug
-        controller = self._controller
-        notifier   = self._notifier
-        tracer     = self._tracer
+        output      = self._output
+        total       = self._total
+        start_at    = self._start_at
+        search      = self._search
+        debug       = self._debug
+        controller  = self._controller
+        notifier    = self._notifier
+        tracer      = self._tracer
 
         # Preliminary sanity checks.  Do this here because we need the notifier
         # object to be initialized based on whether we're using GUI or CLI.
@@ -254,7 +254,7 @@ class MainBody(Thread):
                 rename_existing(output)
             if file_in_use(output):
                 details = '{} appears to be open in another program'.format(output)
-                notifier.warn('Cannot write output file -- is it still open?', details)
+                notifier.error('Cannot write output file -- is it still open?', details)
 
             tracer.update('Beginning interaction with caltech.tind.io')
             written = self._tind.download(search, output, start_at, total)
@@ -281,13 +281,16 @@ class MainBody(Thread):
         else:
             tracer.stop('Done')
             if controller.is_gui:
-                notifier.info('Done. {} records written to {}'.format(written, output))
-            # Don't stop the controller if we reach the end normally, so that
-            # the user can see the trace after the program finishes.
+                status = 'Interrupted' if self._interrupted else 'Done'
+                say = notifier.warn if self._interrupted else notifier.info
+                say('{}; {} records written to {}'.format(status, written, output))
+            controller.quit()
 
 
     def stop(self):
         '''Stop execution of processes.  This is called by our controller.'''
+        self._interrupted = True
+        if __debug__: log('calling interrupt() on tind handler')
         self._tind.interrupt()
 
 
