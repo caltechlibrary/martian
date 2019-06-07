@@ -59,11 +59,12 @@ URL fragment common to all our search + download calls.
 class Tind(object):
 
     def __init__(self, controller, notifier, tracer):
-        self._controller = controller
-        self._notifier   = notifier
-        self._tracer     = tracer
-        self._stop       = False
-        self._downloader = None
+        self._controller  = controller
+        self._notifier    = notifier
+        self._tracer      = tracer
+        self._stop        = False
+        self._downloader  = None
+        self._num_written = 0
 
 
     def download(self, search, output, start_at = 1, total = -1):
@@ -104,8 +105,11 @@ class Tind(object):
             raise RequestError(details)
         soup = BeautifulSoup(response.content, features='lxml')
         tds = soup.select('.searchresultsboxheader')
-        if not tds or len(tds) != 3:
-            details = 'TIND results page was not in the expectd format'
+        if tds == []:
+            notifier.info('This TIND search produced 0 records')
+            return 0
+        if len(tds) != 3:
+            details = 'TIND results page was not in the expected format'
             notifier.fatal('Received unexpected content from TIND', details)
 
         # The 2nd <td> of class 'searchresultsboxheader' contains the number.
@@ -138,10 +142,10 @@ class Tind(object):
     def interrupt(self):
         if __debug__: log('setting the stop flag')
         self._stop = True
-        if __debug__: log('waiting on downloader thread')
         if self._downloader:
+            if __debug__: log('waiting on downloader thread')
             self._downloader.join()
-        if __debug__: log('downloader thread has returned')
+            if __debug__: log('downloader thread has returned')
 
 
     def _download_loop(self, query, output, start_at, total, num_records, tracer):
