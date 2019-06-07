@@ -66,6 +66,7 @@ import wx.richtext
 import sys
 import textwrap
 from   threading import Thread
+from   time import sleep
 import webbrowser
 
 import martian
@@ -128,6 +129,7 @@ class MartianControlGUI(MartianControlBase):
         self._app.SetTopWindow(self._frame)
         self._frame.Center()
         self._frame.Show(True)
+        pub.subscribe(self.quit, "quit")
 
 
     @property
@@ -137,10 +139,10 @@ class MartianControlGUI(MartianControlBase):
 
 
     def run(self, worker):
+        if __debug__: log('starting worker and main GUI loop')
         self._worker = worker
-        if worker:
-            if __debug__: log('calling start() on worker')
-            worker.start()
+        if __debug__: log('calling start() on worker')
+        worker.start()
         if __debug__: log('starting main GUI loop')
         self._app.MainLoop()
         if __debug__: log('calling stop() on worker')
@@ -148,6 +150,7 @@ class MartianControlGUI(MartianControlBase):
 
 
     def quit(self):
+        if __debug__: log('quitting')
         if self._worker:
             if __debug__: log('calling stop() on worker')
             self._worker.stop()
@@ -265,7 +268,23 @@ class MartianMainFrame(wx.Frame):
     def on_cancel_or_quit(self, event):
         if __debug__: log('got Exit/Cancel')
         self._cancel = True
-        self.Destroy()
+        wx.BeginBusyCursor()
+        self.progress_message('')
+        self.progress_message('Stopping work – this may take a few moments')
+
+        # We can't call pub.sendMessage from this function, nor does it work
+        # to call it using wx.CallAfter directly from this function: both
+        # methods hang the GUI and the progress message is never printed.
+        # Calling it from a separate thread works.  The sleep is to make sure
+        # this calling function returns before the thread calls 'quit'.
+
+        def quitter():
+            sleep(1)
+            if __debug__: log('sending message to quit')
+            wx.CallAfter(pub.sendMessage, 'quit')
+
+        subthread = Thread(target = quitter)
+        subthread.start()
         return True
 
 
@@ -307,6 +326,7 @@ class MartianMainFrame(wx.Frame):
         self.text_area.SetInsertionPointEnd()
         self.text_area.AppendText(message + ' ...\n')
         self.text_area.ShowPosition(self.text_area.GetLastPosition())
+        return True
 
 
     def user_dialog(self, results, search, output):
@@ -314,6 +334,7 @@ class MartianMainFrame(wx.Frame):
         dialog = UserDialog(self)
         dialog.initialize_values(results, search, output)
         dialog.ShowWindowModal()
+        return True
 
 
 class UserDialog(wx.Dialog):
