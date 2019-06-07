@@ -96,13 +96,13 @@ class MessageHandlerGUI(MessageHandlerBase):
 
     def info(self, text, details = ''):
         '''Prints an informational message.'''
-        wx.CallAfter(self._note, text)
+        wx.CallAfter(self._note, text, details, 'info')
         self._wait()
 
 
     def warn(self, text, details = ''):
         '''Prints a nonfatal, noncritical warning message.'''
-        wx.CallAfter(self._dialog, text, details, 'warn')
+        wx.CallAfter(self._note, text, details, 'warn')
         self._wait()
 
 
@@ -128,12 +128,14 @@ class MessageHandlerGUI(MessageHandlerBase):
         return self._response
 
 
-    def _note(self, text):
+    def _note(self, text, details = '', severity = 'info'):
         '''Displays a simple notice with a single OK button.'''
         frame = wx.Frame(wx.GetApp().TopWindow)
         frame.Center()
-        dlg = wx.GenericMessageDialog(frame, text, caption = "Martian",
-                                      style = wx.OK | wx.ICON_INFORMATION)
+        icon = wx.ICON_WARNING if severity == 'warn' else wx.ICON_INFORMATION
+        msg = (text + '\n\n' + details) if details else text
+        dlg = wx.GenericMessageDialog(frame, msg, caption = "Martian",
+                                      style = wx.OK | icon)
         clicked = dlg.ShowModal()
         dlg.Destroy()
         frame.Destroy()
