@@ -41,7 +41,7 @@ from martian.network import net
 # Some testing with caltech.tind.io reveals that if you ask for more than 200,
 # it returns 200.
 
-_RECORDS_PER_GET = 100
+_RECORDS_PER_GET = 200
 '''
 Number of records to request from TIND at each iteration.  The maximum allowed
 by TIND is 200.
