@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Search-Engine-Total-Number-Of-Results: 5 -->
+<collection xmlns="http://www.loc.gov/MARC21/slim">
+    <record>
+        <controlfield tag="001">426557</controlfield>
+        <controlfield tag="000">00793nam\a2200253\\\4500</controlfield>
+        <controlfield tag="005">20150923221429.0</controlfield>
+        <controlfield tag="008">700211s1968\\\\sz\b\\\\\\\\\|00100\eng\\</controlfield>
+        <datafield tag="010" ind1=" " ind2=" ">
+            <subfield code="a">77438873</subfield>
+        </datafield>
+        <datafield tag="035" ind1=" " ind2=" ">
+            <subfield code="a">.b10638611</subfield>
+            <subfield code="b">da   </subfield>
+            <subfield code="c">0</subfield>
+        </datafield>
+        <datafield tag="035" ind1=" " ind2=" ">
+            <subfield code="a">(OCoLC)55807</subfield>
+        </datafield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">DLC</subfield>
+            <subfield code="c">DLC</subfield>
+            <subfield code="d">m.c.</subfield>
+            <subfield code="d">CIT</subfield>
+        </datafield>
+        <datafield tag="049" ind1=" " ind2=" ">
+            <subfield code="a">CIT4</subfield>
+        </datafield>
+        <datafield tag="090" ind1=" " ind2=" ">
+            <subfield code="a">DL407</subfield>
+            <subfield code="b">.N3 1968</subfield>
+        </datafield>
+        <datafield tag="110" ind1="2" ind2=" ">
+            <subfield code="a">Nagel Publishers</subfield>
+        </datafield>
+        <datafield tag="245" ind1="1" ind2="0">
+            <subfield code="a">Norway</subfield>
+        </datafield>
+        <datafield tag="250" ind1=" " ind2=" ">
+            <subfield code="a">[4th ed.]</subfield>
+        </datafield>
+        <datafield tag="260" ind1=" " ind2=" ">
+            <subfield code="a">Geneva,</subfield>
+            <subfield code="a">Paris</subfield>
+            <subfield code="c">[1968]</subfield>
+        </datafield>
+        <datafield tag="300" ind1=" " ind2=" ">
+            <subfield code="a">xxxvi, 184p.</subfield>
+            <subfield code="b">maps (part col.)</subfield>
+            <subfield code="c">16cm</subfield>
+        </datafield>
+        <datafield tag="490" ind1="0" ind2=" ">
+            <subfield code="a">Nagel's encyclopedia-guide</subfield>
+        </datafield>
+        <datafield tag="500" ind1=" " ind2=" ">
+            <subfield code="a">Sole distributor in the United States of America and Canada: Cowles Education Corporation, New York</subfield>
+        </datafield>
+        <datafield tag="651" ind1=" " ind2="0">
+            <subfield code="a">Norway</subfield>
+            <subfield code="v">Guidebooks</subfield>
+            <subfield code="x">Description and travel</subfield>
+        </datafield>
+        <datafield tag="907" ind1=" " ind2=" ">
+            <subfield code="a">.b10638611</subfield>
+            <subfield code="b">150824</subfield>
+            <subfield code="c">900227</subfield>
+        </datafield>
+        <datafield tag="909" ind1="C" ind2="O">
+            <subfield code="o">oai:caltech.tind.io:426557</subfield>
+            <subfield code="p">caltech:bibliographic</subfield>
+        </datafield>
+        <datafield tag="980" ind1=" " ind2=" ">
+            <subfield code="a">BIB</subfield>
+        </datafield>
+        <datafield tag="998" ind1=" " ind2=" ">
+            <subfield code="a">da</subfield>
+            <subfield code="b">091203</subfield>
+            <subfield code="c">a</subfield>
+            <subfield code="d">m</subfield>
+            <subfield code="e">-</subfield>
+            <subfield code="f">eng</subfield>
+            <subfield code="g">sz </subfield>
+            <subfield code="h">0</subfield>
+            <subfield code="i">1</subfield>
+        </datafield>
+    </record>
+
+    
+<record>
+  <controlfield tag="000">00814cam\a2200253I\\4500</controlfield>
+  <controlfield tag="001">407283</controlfield>
+  <controlfield tag="005">20171101113029.0</controlfield>
+  <controlfield tag="008">750416|1941||||xx\\\\\\\\\\\\00010\engmu</controlfield>
+  <datafield tag="010" ind1=" " ind2=" ">
+    <subfield code="a">41023342</subfield>
+  </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">1280424</subfield>
+  </datafield>
+  <datafield tag="040" ind1=" " ind2=" ">
+    <subfield code="c">CIN</subfield>
+    <subfield code="d">OCL</subfield>
+    <subfield code="d">CIT</subfield>
+  </datafield>
+  <datafield tag="049" ind1=" " ind2=" ">
+    <subfield code="a">CIT4</subfield>
+  </datafield>
+  <datafield tag="090" ind1=" " ind2=" ">
+    <subfield code="a">D763.N6</subfield>
+    <subfield code="b">K6 1941a</subfield>
+  </datafield>
+  <datafield tag="100" ind1="1" ind2=" ">
+    <subfield code="a">Koht, Halvdan,</subfield>
+    <subfield code="d">1873-1965</subfield>
+  </datafield>
+  <datafield tag="245" ind1="1" ind2="0">
+    <subfield code="a">Norway, neutral and invaded,</subfield>
+    <subfield code="c">by Halvdan Koht</subfield>
+  </datafield>
+  <datafield tag="260" ind1=" " ind2=" ">
+    <subfield code="a">New York,</subfield>
+    <subfield code="b">Macmillan,</subfield>
+    <subfield code="c">1941</subfield>
+  </datafield>
+  <datafield tag="300" ind1=" " ind2=" ">
+    <subfield code="a">253 p.</subfield>
+    <subfield code="b">illus., ports.</subfield>
+    <subfield code="c">21 cm</subfield>
+  </datafield>
+  <datafield tag="583" ind1="0" ind2=" ">
+    <subfield code="a">retained</subfield>
+    <subfield code="x">SCELC shared print</subfield>
+    <subfield code="c">20170712</subfield>
+    <subfield code="5">CIT</subfield>
+  </datafield>
+  <datafield tag="650" ind1=" " ind2="0">
+    <subfield code="a">World War, 1939-1945</subfield>
+    <subfield code="z">Norway</subfield>
+  </datafield>
+  <datafield tag="650" ind1=" " ind2="0">
+    <subfield code="a">World War, 1939-1945</subfield>
+    <subfield code="x">Diplomatic history</subfield>
+  </datafield>
+  <datafield tag="651" ind1=" " ind2="0">
+    <subfield code="a">Norway</subfield>
+    <subfield code="x">Politics and government</subfield>
+    <subfield code="y">1905-</subfield>
+  </datafield>
+  <datafield tag="651" ind1=" " ind2="0">
+    <subfield code="a">Norway</subfield>
+    <subfield code="x">History</subfield>
+    <subfield code="y">German occupation, 1940-1945</subfield>
+  </datafield>
+  <datafield tag="907" ind1=" " ind2=" ">
+    <subfield code="a">.b10404570</subfield>
+    <subfield code="b">150824</subfield>
+    <subfield code="c">900226</subfield>
+  </datafield>
+  <datafield tag="909" ind1="C" ind2="O">
+    <subfield code="o">oai:caltech.tind.io:407283</subfield>
+    <subfield code="p">caltech:bibliographic</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">BIB</subfield>
+  </datafield>
+  <datafield tag="998" ind1=" " ind2=" ">
+    <subfield code="a">da</subfield>
+    <subfield code="b">091203</subfield>
+    <subfield code="c">a</subfield>
+    <subfield code="d">m</subfield>
+    <subfield code="e">-</subfield>
+    <subfield code="f">eng</subfield>
+    <subfield code="g">xx </subfield>
+    <subfield code="h">0</subfield>
+    <subfield code="i">1</subfield>
+  </datafield>
+</record>
+    <record>
+        <controlfield tag="001">452191</controlfield>
+        <controlfield tag="000">00691cam\a2200229I\\4500</controlfield>
+        <controlfield tag="005">20150923222238.0</controlfield>
+        <controlfield tag="008">720830s1948\\\\njub\\\\\b\\\\00000\eng\\</controlfield>
+        <datafield tag="010" ind1=" " ind2=" ">
+            <subfield code="a">48009017</subfield>
+        </datafield>
+        <datafield tag="035" ind1=" " ind2=" ">
+            <subfield code="a">.b10923895</subfield>
+            <subfield code="b">da   </subfield>
+            <subfield code="c">0</subfield>
+        </datafield>
+        <datafield tag="035" ind1=" " ind2=" ">
+            <subfield code="a">(OCoLC)395622</subfield>
+        </datafield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">DLC</subfield>
+            <subfield code="c">WSU</subfield>
+            <subfield code="d">SER</subfield>
+            <subfield code="d">CIT</subfield>
+        </datafield>
+        <datafield tag="049" ind1=" " ind2=" ">
+            <subfield code="a">CIT4</subfield>
+        </datafield>
+        <datafield tag="090" ind1=" " ind2=" ">
+            <subfield code="a">DL448</subfield>
+            <subfield code="b">.L3</subfield>
+        </datafield>
+        <datafield tag="100" ind1="1" ind2="0">
+            <subfield code="a">Larsen, Karen,</subfield>
+            <subfield code="d">1879-</subfield>
+        </datafield>
+        <datafield tag="245" ind1="1" ind2="2">
+            <subfield code="a">A history of Norway</subfield>
+        </datafield>
+        <datafield tag="260" ind1="0" ind2=" ">
+            <subfield code="a">Princeton,</subfield>
+            <subfield code="b">Princeton Univ. Press for the American-Scandinavian Foundation,</subfield>
+            <subfield code="c">1948</subfield>
+        </datafield>
+        <datafield tag="300" ind1=" " ind2=" ">
+            <subfield code="a">x, 591p.</subfield>
+            <subfield code="b">map.</subfield>
+            <subfield code="c">25cm</subfield>
+        </datafield>
+        <datafield tag="504" ind1=" " ind2=" ">
+            <subfield code="a">"A selected bibliography": p.574-576</subfield>
+        </datafield>
+        <datafield tag="651" ind1=" " ind2="0">
+            <subfield code="a">Norway</subfield>
+            <subfield code="x">History</subfield>
+        </datafield>
+        <datafield tag="907" ind1=" " ind2=" ">
+            <subfield code="a">.b10923895</subfield>
+            <subfield code="b">150824</subfield>
+            <subfield code="c">900228</subfield>
+        </datafield>
+        <datafield tag="909" ind1="C" ind2="O">
+            <subfield code="o">oai:caltech.tind.io:452191</subfield>
+            <subfield code="p">caltech:bibliographic</subfield>
+        </datafield>
+        <datafield tag="980" ind1=" " ind2=" ">
+            <subfield code="a">BIB</subfield>
+        </datafield>
+        <datafield tag="998" ind1=" " ind2=" ">
+            <subfield code="a">da</subfield>
+            <subfield code="b">069002</subfield>
+            <subfield code="c">a</subfield>
+            <subfield code="d">m</subfield>
+            <subfield code="e">-</subfield>
+            <subfield code="f">eng</subfield>
+            <subfield code="g">nju</subfield>
+            <subfield code="h">2</subfield>
+            <subfield code="i">1</subfield>
+        </datafield>
+    </record>
+
+    
+    <record>
+        <controlfield tag="001">460237</controlfield>
+        <controlfield tag="000">01028nam\a2200289Ia\4500</controlfield>
+        <controlfield tag="005">20150923222520.0</controlfield>
+        <controlfield tag="008">800604s1953\\\\no\ab\\\\b\\\\00110\normc</controlfield>
+        <datafield tag="010" ind1=" " ind2=" ">
+            <subfield code="a">gs 54000034</subfield>
+        </datafield>
+        <datafield tag="035" ind1=" " ind2=" ">
+            <subfield code="a">.b11019530</subfield>
+            <subfield code="b">ge   </subfield>
+            <subfield code="c">0</subfield>
+        </datafield>
+        <datafield tag="035" ind1=" " ind2=" ">
+            <subfield code="a">(OCoLC)6387970</subfield>
+        </datafield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">RETROCON/NYGG (U.S. Geol. Survey.  Libr.)</subfield>
+            <subfield code="c">COO</subfield>
+            <subfield code="d">m.c.</subfield>
+            <subfield code="d">CIT</subfield>
+        </datafield>
+        <datafield tag="049" ind1=" " ind2=" ">
+            <subfield code="a">CITL</subfield>
+        </datafield>
+        <datafield tag="090" ind1=" " ind2=" ">
+            <subfield code="a">QE281</subfield>
+            <subfield code="b">.H64 1953</subfield>
+        </datafield>
+        <datafield tag="100" ind1="1" ind2="0">
+            <subfield code="a">Holtedahl, Olaf,</subfield>
+            <subfield code="d">1885-</subfield>
+        </datafield>
+        <datafield tag="245" ind1="1" ind2="0">
+            <subfield code="a">Norges geologi /</subfield>
+            <subfield code="c">av Olaf Holtedahl</subfield>
+        </datafield>
+        <datafield tag="260" ind1="0" ind2=" ">
+            <subfield code="a">Oslo :</subfield>
+            <subfield code="b">I kommisjon hos H. Aschehoug,</subfield>
+            <subfield code="c">1953</subfield>
+        </datafield>
+        <datafield tag="300" ind1=" " ind2=" ">
+            <subfield code="a">2 v. (xi, 1118 p.) :</subfield>
+            <subfield code="b">ill., maps ;</subfield>
+            <subfield code="c">22 cm. +</subfield>
+            <subfield code="e">1 case (14 folded plates, 8 folded maps)</subfield>
+        </datafield>
+        <datafield tag="490" ind1="1" ind2=" ">
+            <subfield code="a">Norges geologiske undersøkelse ;</subfield>
+            <subfield code="v">nr. 164</subfield>
+        </datafield>
+        <datafield tag="504" ind1=" " ind2=" ">
+            <subfield code="a">Includes bibliographies and index</subfield>
+        </datafield>
+        <datafield tag="650" ind1=" " ind2="0">
+            <subfield code="a">Geology</subfield>
+            <subfield code="z">Norway</subfield>
+        </datafield>
+        <datafield tag="650" ind1=" " ind2="0">
+            <subfield code="a">Paleontology</subfield>
+            <subfield code="z">Norway</subfield>
+        </datafield>
+        <datafield tag="650" ind1=" " ind2="0">
+            <subfield code="a">Prehistoric peoples</subfield>
+            <subfield code="z">Norway</subfield>
+        </datafield>
+        <datafield tag="651" ind1=" " ind2="0">
+            <subfield code="a">Norway</subfield>
+            <subfield code="x">Antiquities</subfield>
+        </datafield>
+        <datafield tag="830" ind1=" " ind2="0">
+            <subfield code="a">Skrifter (Norges geologiske undersøkelse) ;</subfield>
+            <subfield code="v">nr. 164</subfield>
+        </datafield>
+        <datafield tag="907" ind1=" " ind2=" ">
+            <subfield code="a">.b11019530</subfield>
+            <subfield code="b">150824</subfield>
+            <subfield code="c">900301</subfield>
+        </datafield>
+        <datafield tag="909" ind1="C" ind2="O">
+            <subfield code="o">oai:caltech.tind.io:460237</subfield>
+            <subfield code="p">caltech:bibliographic</subfield>
+        </datafield>
+        <datafield tag="980" ind1=" " ind2=" ">
+            <subfield code="a">BIB</subfield>
+        </datafield>
+        <datafield tag="998" ind1=" " ind2=" ">
+            <subfield code="a">ge</subfield>
+            <subfield code="b">091203</subfield>
+            <subfield code="c">a</subfield>
+            <subfield code="d">m</subfield>
+            <subfield code="e">-</subfield>
+            <subfield code="f">nor</subfield>
+            <subfield code="g">no </subfield>
+            <subfield code="h">0</subfield>
+            <subfield code="i">2</subfield>
+        </datafield>
+    </record>
+
+    
+    <record>
+        <controlfield tag="001">560974</controlfield>
+        <controlfield tag="000">00981nam\a2200325Ia\4500</controlfield>
+        <controlfield tag="005">20150923225753.0</controlfield>
+        <controlfield tag="008">870331s1985\\\\no\\\\\\\b\\\\00110\nor\d</controlfield>
+        <datafield tag="035" ind1=" " ind2=" ">
+            <subfield code="a">.b12366626</subfield>
+        </datafield>
+        <datafield tag="035" ind1=" " ind2=" ">
+            <subfield code="a">(OCoLC)15467229</subfield>
+        </datafield>
+        <datafield tag="040" ind1=" " ind2=" ">
+            <subfield code="a">GIS</subfield>
+            <subfield code="c">GIS</subfield>
+            <subfield code="d">m/c</subfield>
+        </datafield>
+        <datafield tag="041" ind1="0" ind2=" ">
+            <subfield code="a">nor</subfield>
+            <subfield code="b">eng</subfield>
+        </datafield>
+        <datafield tag="049" ind1=" " ind2=" ">
+            <subfield code="a">CITL</subfield>
+        </datafield>
+        <datafield tag="099" ind1=" " ind2=" ">
+            <subfield code="a">JOURNAL ISSUE</subfield>
+        </datafield>
+        <datafield tag="100" ind1="1" ind2="0">
+            <subfield code="a">Neumann, Henrich</subfield>
+        </datafield>
+        <datafield tag="245" ind1="1" ind2="0">
+            <subfield code="a">Norges mineraler /</subfield>
+            <subfield code="c">Henrich Neumann</subfield>
+        </datafield>
+        <datafield tag="260" ind1="0" ind2=" ">
+            <subfield code="a">Trondheim :</subfield>
+            <subfield code="b">Universitetsforlaget,</subfield>
+            <subfield code="c">1985</subfield>
+        </datafield>
+        <datafield tag="300" ind1=" " ind2=" ">
+            <subfield code="a">278 p. ;</subfield>
+            <subfield code="c">25 cm</subfield>
+        </datafield>
+        <datafield tag="490" ind1="1" ind2=" ">
+            <subfield code="a">Skrifter / Norges geologiske undersøkelse ;</subfield>
+            <subfield code="v">68</subfield>
+        </datafield>
+        <datafield tag="500" ind1=" " ind2=" ">
+            <subfield code="a">Summary in English</subfield>
+        </datafield>
+        <datafield tag="500" ind1=" " ind2=" ">
+            <subfield code="a">Cover title</subfield>
+        </datafield>
+        <datafield tag="500" ind1=" " ind2=" ">
+            <subfield code="a">Includes index</subfield>
+        </datafield>
+        <datafield tag="504" ind1=" " ind2=" ">
+            <subfield code="a">Bibliography: p. 247-274</subfield>
+        </datafield>
+        <datafield tag="590" ind1=" " ind2=" ">
+            <subfield code="a">Analytic record</subfield>
+        </datafield>
+        <datafield tag="650" ind1=" " ind2="0">
+            <subfield code="a">Mineralogy</subfield>
+            <subfield code="z">Norway</subfield>
+        </datafield>
+        <datafield tag="651" ind1=" " ind2="0">
+            <subfield code="a">Norway</subfield>
+            <subfield code="x">Minerals</subfield>
+        </datafield>
+        <datafield tag="710" ind1="2" ind2="0">
+            <subfield code="a">Norges geologiske undersøkelse</subfield>
+        </datafield>
+        <datafield tag="830" ind1=" " ind2="0">
+            <subfield code="a">Skrifter (Norges geologiske undersøkelse) ;</subfield>
+            <subfield code="v">nr. 68</subfield>
+        </datafield>
+        <datafield tag="907" ind1=" " ind2=" ">
+            <subfield code="a">.b12366626</subfield>
+            <subfield code="b">150817</subfield>
+            <subfield code="c">900515</subfield>
+        </datafield>
+        <datafield tag="909" ind1="C" ind2="O">
+            <subfield code="o">oai:caltech.tind.io:560974</subfield>
+            <subfield code="p">caltech:bibliographic</subfield>
+        </datafield>
+        <datafield tag="948" ind1=" " ind2=" ">
+            <subfield code="a">car / skj 040300</subfield>
+        </datafield>
+        <datafield tag="980" ind1=" " ind2=" ">
+            <subfield code="a">BIB</subfield>
+        </datafield>
+        <datafield tag="998" ind1=" " ind2=" ">
+            <subfield code="a">ge</subfield>
+            <subfield code="b">019008</subfield>
+            <subfield code="c">a</subfield>
+            <subfield code="d">m</subfield>
+            <subfield code="e">-</subfield>
+            <subfield code="f">nor</subfield>
+            <subfield code="g">no </subfield>
+            <subfield code="h">0</subfield>
+            <subfield code="i">1</subfield>
+        </datafield>
+    </record>
+
+    
+</collection>
