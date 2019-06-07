@@ -189,6 +189,10 @@ class MainBody(Thread):
                  controller, notifier, tracer):
         '''Initializes main thread object but does not start the thread.'''
         Thread.__init__(self, name = "MainBody")
+        if controller.is_gui:
+            # Only make this a daemon thread when using the GUI; for CLI, it
+            # must not be a daemon thread or else Martian exits immediately.
+            self.daemon = True
         self._output     = output
         self._total      = total
         self._start_at   = start_at
@@ -197,13 +201,12 @@ class MainBody(Thread):
         self._controller = controller
         self._tracer     = tracer
         self._notifier   = notifier
-        if controller.is_gui:
-            # Only make this a daemon thread when using the GUI; for CLI, it
-            # must not be a daemon thread or else Martian exits immediately.
-            self.daemon = True
+        self._tind       = Tind(controller, notifier, tracer)
 
 
     def run(self):
+        '''Implementation of Thread object run() method.'''
+
         # Set shortcut variables for better code readability below.
         output     = self._output
         total      = self._total
@@ -227,6 +230,7 @@ class MainBody(Thread):
         # If we get this far, we're ready to do this thing.
         written = 0
         try:
+            cancelled = False
             if controller.is_gui:
                 tracer.update('Asking user for input & output info')
                 (search, output, cancelled) = self.get_user_input(search, output)
@@ -234,7 +238,7 @@ class MainBody(Thread):
                 if __debug__: log('setting output to {}', output)
             if cancelled:
                 if __debug__: log('user cancelled; raising UserCancelled')
-                tracer.update('Input cancelled by user; stopping.')
+                tracer.update('Input cancelled by user; stopping')
                 raise UserCancelled
             if not search:
                 if __debug__: log('No search string given; raising UserCancelled')
@@ -253,8 +257,7 @@ class MainBody(Thread):
                 notifier.warn('Cannot write output file -- is it still open?', details)
 
             tracer.update('Beginning interaction with caltech.tind.io')
-            tind = Tind(controller, notifier, tracer)
-            written = tind.search_and_download(search, output, start_at, total)
+            written = self._tind.download(search, output, start_at, total)
             tracer.update('{} records written to {}'.format(written, output))
         except (KeyboardInterrupt, UserCancelled) as err:
             # If using the GUI and the user deliberately quit in the input
@@ -263,6 +266,7 @@ class MainBody(Thread):
             # they want to use the help.  In cmd-line mode, we just quit now.
             if not controller.is_gui:
                 tracer.stop('Quitting.')
+                self._tind.interrupt()
                 controller.quit()
         except ServiceFailure:
             tracer.stop('Stopping due to a problem connecting to services')
@@ -280,6 +284,11 @@ class MainBody(Thread):
                 notifier.info('Done. {} records written to {}'.format(written, output))
             # Don't stop the controller if we reach the end normally, so that
             # the user can see the trace after the program finishes.
+
+
+    def stop(self):
+        '''Stop execution of processes.  This is called by our controller.'''
+        self._tind.interrupt()
 
 
     def get_user_input(self, search, output):

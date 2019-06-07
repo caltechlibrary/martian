@@ -103,10 +103,18 @@ class MartianControlCLI(MartianControlBase):
     def run(self, worker):
         self._worker = worker
         if worker:
-            worker.start()
+            if __debug__: log('calling start() on worker')
+            worker.start()              # Start the thread
+            worker.join()               # Wait until thread exits
+            if __debug__: log('calling stop() on worker')
+            worker.stop()               # Force stop subthreads
 
 
     def quit(self):
+        if self._worker:
+            if __debug__: log('calling stop() on worker')
+            self._worker.stop()
+        if __debug__: log('exiting')
         sys.exit()
 
 
@@ -131,11 +139,19 @@ class MartianControlGUI(MartianControlBase):
     def run(self, worker):
         self._worker = worker
         if worker:
-            self._worker.start()
+            if __debug__: log('calling start() on worker')
+            worker.start()
+        if __debug__: log('starting main GUI loop')
         self._app.MainLoop()
+        if __debug__: log('calling stop() on worker')
+        worker.stop()
 
 
     def quit(self):
+        if self._worker:
+            if __debug__: log('calling stop() on worker')
+            self._worker.stop()
+        if __debug__: log('destroying control GUI')
         wx.CallAfter(self._frame.Destroy)
 
 
