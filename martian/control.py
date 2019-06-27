@@ -459,8 +459,9 @@ class UserDialog(wx.Dialog):
             self.search.AppendText(self._search)
             self.search.Refresh()
         if self._output:
-            self.output.AppendText(self._output)
-            self.output.Refresh()
+            self.output.SetPath(self._output)
+        if search and output:
+            self.ok_button.Enable()
 
 
     def return_values(self):
