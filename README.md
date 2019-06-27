@@ -15,12 +15,14 @@ _Martian_ searches Caltech's TIND.io database with a user-specified query and do
 Table of Contents
 -----------------
 * [Introduction](#-introduction)
-* [How to install and uninstall Martian](#-installation-instructions)
-* [How to use Martian](#︎-basic-operation)
-* [Getting help and support](#-getting-help-and-support)
-* [Do you like it?](#-do-you-like-it)
-* [Acknowledgments](#︎-acknowledgments)
-* [Copyright and license](#︎-copyright-and-license)
+* [Installation and uninstallation](#-installation-and-uninstallation)
+* [Usage](#-usage)
+* [Known issues and limitations](#-known-issues-and-limitations)
+* [Getting help](#-getting-help)
+* [Contributing](#-contributing)
+* [License](#-license)
+* [Authors and history](#-authors-and-history)
+* [Copyright and license](#-copyright-and-license)
 
 
 ☀ Introduction
@@ -29,8 +31,8 @@ Table of Contents
 Caltech's librarians occasionally need to download large numbers of records from Caltech's TIND.io database.  Doing this through TIND's web interface is tedious because TIND.io does not provide a bulk download facility.  _Martian_ is a program to make this work easier.  It performs one simple task: run a query in caltech.tind.io and download all the results in MARC XML format to a file on the local computer.
 
 
-✺ How to install and uninstall Martian
--------------------------------------
+✺ Installation and uninstallation
+---------------------------------
 
 ### Using the normal installer program
 
@@ -54,8 +56,8 @@ sudo python3 -m pip install . --upgrade
 ```
 
 
-▶︎ How to use Martian
---------------------
+▶︎ Usage
+-------
 
 Martian is simple in operation and has a correspondingly simple interface. The interface has two modes of operation: using a graphical user interface (GUI), or using the command-line.
 
@@ -99,24 +101,42 @@ If given the `-Z` option (`/Z` on Windows), this program will print a trace of w
 If given the `-V` option (`/V` on Windows), this program will print version information and exit without doing anything else.
 
 
-Limitations
------------
+⚑ Known issues and limitations
+-------------------------------
 
 Here are some of the current limitations of Martian:
 
 * Because Martian gets data from TIND.io in batches of 200 at a time, interrupting Martian while it's running may result in either getting no data at all (if there is less than 200 to download) or getting up to 200 less than what it printed as its current progress point.
-* The GUI interface currently does not provide a way to indicate that Martian should get fewer than the maximum number of records returned by a given search, nor a way to indicate a starting record.  However, the command-line interface does provide options for setting these parameters at run time.
+* The GUI interface currently does not provide a way to indicate that Martian should get fewer than the maximum number of records returned by a given search, nor a way to indicate a starting record.  However, the command-line interface does provide options for setting these parameters at run time.  To start from a specific result instead of the first result in a particular search, it's currently necessary to use the command-line interface.
 * The choice of download format (which is MARC XML as produced by TIND.io), and the number of records it attempts to get per iteration (200) are currently fixed and hardwired into the program.
 
 
-⁇ Getting help and support
---------------------------
+⁇ Getting help
+-------------
 
 If you find an issue, please submit it in [the GitHub issue tracker](https://github.com/caltechlibrary/martian/issues) for this repository.
 
 
+♬ Contributing
+-------------
+
+We would be happy to receive your help and participation with enhancing Martian!  Please visit the [guidelines for contributing](CONTRIBUTING.md) for some tips on getting started.
+
+
+☮︎ License
+---------
+
+Copyright (C) 2019, Caltech.  This software is freely distributed under a BSD/MIT type license.  Please see the [LICENSE](LICENSE) file for more information.
+
+
+❡ Authors and history
+--------------------
+
+[Mike Hucka](https://github.com/mhucka) designed and implemented Martian based on requests from [Laurel Narizny](https://github.com/lnarizny) in mid-2019.
+
+
 ☺︎ Acknowledgments
------------------------
+------------------
 
 The [vector artwork](https://thenounproject.com/search/?q=martian&i=63049) of an alien spaceship used as a starting point for the logo for this repository was created by [Gonzalo Bravo](https://thenounproject.com/webposible/) for the [Noun Project](https://thenounproject.com).  It is licensed under the Creative Commons [Attribution 3.0 Unported](https://creativecommons.org/licenses/by/3.0/deed.en) license.  The vector graphics was modified by Mike Hucka to change the color.
 
@@ -139,11 +159,7 @@ _Martian_ makes use of numerous open-source packages, without which it would hav
 * [urllib3](https://urllib3.readthedocs.io/en/latest/) &ndash; a powerful HTTP library for Python
 * [wxPython](https://wxpython.org) &ndash; a cross-platform GUI toolkit for the Python language
 
-
-☮︎ Copyright and license
----------------------
-
-Copyright (C) 2019, Caltech.  This software is freely distributed under a BSD/MIT type license.  Please see the [LICENSE](LICENSE) file for more information.
+Finally, we are grateful for computing &amp; institutional resources made available by the California Institute of Technology.
     
 <div align="center">
   <a href="https://www.caltech.edu">
