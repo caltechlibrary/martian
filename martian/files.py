@@ -51,10 +51,10 @@ def module_path():
 
 
 def martian_path():
-    '''Returns the path to where Lost It! is installed.'''
+    '''Returns the path to where Martian is installed.'''
     # The path returned by module.__path__ is to the directory containing
     # the __init__.py file.  What we want here is the path to the installation
-    # of the Lost It! binary.
+    # of the Martian binary.
     if sys.platform.startswith('win'):
         from winreg import OpenKey, CloseKey, QueryValueEx, HKEY_LOCAL_MACHINE, KEY_READ
         try:
