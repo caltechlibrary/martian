@@ -15,14 +15,14 @@ _Martian_ searches Caltech's TIND.io database with a user-specified query and do
 Table of Contents
 -----------------
 * [Introduction](#-introduction)
-* [Installation and uninstallation](#-installation-and-uninstallation)
+* [Installation](#-installation)
 * [Usage](#-usage)
 * [Known issues and limitations](#-known-issues-and-limitations)
 * [Getting help](#-getting-help)
 * [Contributing](#-contributing)
 * [License](#-license)
 * [Authors and history](#-authors-and-history)
-* [Copyright and license](#-copyright-and-license)
+* [Acknowledgments](#acknowledgments)
 
 
 ☀ Introduction
@@ -31,8 +31,8 @@ Table of Contents
 Caltech's librarians occasionally need to download large numbers of records from Caltech's TIND.io database.  Doing this through TIND's web interface is tedious because TIND.io does not provide a bulk download facility.  _Martian_ is a program to make this work easier.  It performs one simple task: run a query in caltech.tind.io and download all the results in MARC XML format to a file on the local computer.
 
 
-✺ Installation and uninstallation
----------------------------------
+✺ Installation
+-------------
 
 ### Using the normal installer program
 
