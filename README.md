@@ -55,6 +55,8 @@ cd martian
 sudo python3 -m pip install . --upgrade
 ```
 
+If you install Martian in this way (from the sources), you may run into compatibility problems with the installation of the Python `pycurl` package.  Some notes and tips about installation can be found in the [wiki for Martian](https://github.com/caltechlibrary/martian/wiki).
+
 
 ▶︎ Usage
 -------
