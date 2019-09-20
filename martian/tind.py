@@ -50,7 +50,7 @@ by TIND is 200.
 _BASE_GET_URL = 'https://caltech.tind.io/search?ln=en'
 '''
 URL fragment common to all our search + download calls.
-''' 
+'''
 
 
 # Main class.
@@ -67,10 +67,10 @@ class Tind(object):
         self._num_written = 0
 
 
-    def download(self, search, output, start_at = 1, total = -1):
+    def download(self, search, output, start = 1, total = -1):
         '''Search with the given 'search' string and write the output to file
         named by 'output'.  Get 'total' number of records (default: all),
-        optionally starting from record number 'start_at' (default: 1).
+        optionally starting from record number 'start' (default: 1).
         Returns the number of records downloaded, or 0 if something went wrong.
         '''
         tracer   = self._tracer
@@ -81,11 +81,18 @@ class Tind(object):
             return 0
         elif search.startswith('http'):
             # We were given a full url.  Extract just the search part.
-            match = re.search('p=([^&]+)', search)
-            query = match.group(1)
+            match = re.search(r'p=([^&]+)', search)
+            query = match.group(1) if match is not None else ""
         else:
             # We were given just the search expression.
             query = search
+
+        # Look for any collections that might be specified.
+        collections = []
+        if search.find('&c'):
+            # There can be more than one.
+            for match in re.finditer(r'&c=([^&]+)', search):
+                collections.append(match.group(1))
 
         # TIND doesn't seem to offer a way to find out the number of expected
         # records if you ask for MARC XML output.  So here we start by doing
@@ -93,7 +100,7 @@ class Tind(object):
         # results it reports, then loop to get the MARC records.
 
         tracer.update('Asking caltech.tind.io how many records to expect')
-        prelim_search = url_for_get(query, num_get = 1, start_at = 1, marc = False)
+        prelim_search = url_for_get(query, collections, get = 1, start = 1, marc = False)
         (response, error) = net('get', prelim_search)
         if response.status_code > 300:
             details = 'exception connecting to tind.io: {}'.format(error)
@@ -108,17 +115,19 @@ class Tind(object):
         if tds == []:
             notifier.info('This TIND search produced 0 records')
             return 0
-        if len(tds) != 3:
-            details = 'TIND results page was not in the expected format'
-            notifier.fatal('Received unexpected content from TIND', details)
 
-        # The 2nd <td> of class 'searchresultsboxheader' contains the number.
-        match = re.search('<span><strong>([0-9,]+)</strong> records found', str(tds[1]))
-        if match and match.group(1):
-            num_records = int(match.group(1).replace(',', ''))
-        else:
-            notifier.fatal('Unexpected result from TIND: could not find number of records')
-            raise InternalError(details)
+        # When multiple collections are used, the total number of records is
+        # the sum of the results from individual collections.
+        num_records = 0
+        for td in tds:
+            if td.text.find('records found') > 0:
+                match = re.search('([0-9,]+) records found', td.text)
+                if match and match.group(1):
+                    num_records += int(match.group(1).replace(',', ''))
+                else:
+                    notifier.fatal('Unexpected format for number of records')
+                    raise InternalError(details)
+
         if num_records == 0:
             notifier.info('This TIND search produced 0 records')
             return 0
@@ -128,7 +137,8 @@ class Tind(object):
 
         # OK, now let's loop.
         self._downloader = Thread(target = self._download_loop,
-                                  args = (query, output, start_at, total, num_records, tracer))
+                                  args = (query, collections, output, start,
+                                          total, num_records, tracer))
         if __debug__: log('starting downloader thread')
         self._downloader.start()
         if __debug__: log('waiting on downloader thread')
@@ -148,7 +158,7 @@ class Tind(object):
             if __debug__: log('downloader thread has returned')
 
 
-    def _download_loop(self, query, output, start_at, total, num_records, tracer):
+    def _download_loop(self, query, collections, output, start, total, num_records, tracer):
         if total < 0:
             total = num_records
         if __debug__: log('opening output file: {}', output)
@@ -156,16 +166,16 @@ class Tind(object):
         out.write(b'<?xml version="1.0" encoding="UTF-8"?>\n')
         out.write(b'<collection xmlns="http://www.loc.gov/MARC21/slim">\n')
 
-        while start_at < total and not self._stop:
+        while start < total and not self._stop:
             # The value of end_at is only used for the user message.
-            if start_at + _RECORDS_PER_GET > num_records:
+            if start + _RECORDS_PER_GET > num_records:
                 end_at = num_records
             else:
-                end_at = _RECORDS_PER_GET + start_at - 1
-            tracer.update('Getting records {} to {}'.format(start_at, end_at))
+                end_at = _RECORDS_PER_GET + start - 1
+            tracer.update('Getting records {} to {}'.format(start, end_at))
             data = None
             try:
-                url = url_for_get(query, _RECORDS_PER_GET, start_at, marc = True)
+                url = url_for_get(query, collections, _RECORDS_PER_GET, start, marc = True)
                 data = BytesIO()
                 curl = Curl()
                 curl.setopt(pycurl.CAINFO, certifi.where())
@@ -183,12 +193,12 @@ class Tind(object):
             if data:
                 # Skip stuff at beginning and end, and write to the file.
                 v = data.getvalue()
-                start = v.find(b'<collection xmlns="http://www.loc.gov/MARC21/slim">')
-                end = v.rfind(b'</collection>')
-                out.write(v[start + 52 : end])
+                block_start = v.find(b'<collection xmlns="http://www.loc.gov/MARC21/slim">')
+                block_end = v.rfind(b'</collection>')
+                out.write(v[block_start + 52 : block_end])
 
                 # Increment and continue to get more
-                start_at += _RECORDS_PER_GET
+                start += _RECORDS_PER_GET
                 self._num_written = end_at
 
         if __debug__: log('closing output due to interruption' if self._stop
@@ -200,9 +210,11 @@ class Tind(object):
 # Miscellaneous utility functions.
 # .............................................................................
 
-def url_for_get(search_string, num_get, start_at, marc = False):
-    return (_BASE_GET_URL
-            + '&p=' + urllib.parse.quote(search_string)
-            + '&jrec=' + str(start_at)
-            + '&rg=' + str(num_get)
+def url_for_get(search_string, collections, get, start, marc = False):
+    u = (_BASE_GET_URL
+            + ('&c=' + '&c='.join(collections) if collections else '')
+            + '&p=' + search_string
+            + '&jrec=' + str(start)
+            + '&rg=' + str(get)
             + ('&of=xm' if marc else ''))
+    return u
