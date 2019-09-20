@@ -84,8 +84,9 @@ class Tind(object):
             match = re.search(r'p=([^&]+)', search)
             query = match.group(1) if match is not None else ""
         else:
-            # We were given just the search expression.
-            query = search
+            # We were given a search expression directly.  Quote it to deal
+            # with embedded spaces and whatnot.
+            query = urllib.parse.quote(search)
 
         # Look for any collections that might be specified.
         collections = []
