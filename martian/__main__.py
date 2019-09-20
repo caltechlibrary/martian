@@ -150,7 +150,7 @@ message and exit without doing anything else.
         sys.exit()
 
     # Configure debug logging if it's turned on.
-    if debug:
+    if debug != 'out':
         set_debug(True, debug)
 
     # We use default values that provide more intuitive help text printed by
