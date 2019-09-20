@@ -166,7 +166,7 @@ class Tind(object):
         out.write(b'<?xml version="1.0" encoding="UTF-8"?>\n')
         out.write(b'<collection xmlns="http://www.loc.gov/MARC21/slim">\n')
 
-        while start < total and not self._stop:
+        while start <= total and not self._stop:
             # The value of end_at is only used for the user message.
             if start + _RECORDS_PER_GET > num_records:
                 end_at = num_records
