@@ -8,8 +8,8 @@ _Martian_ searches Caltech's TIND.io database with a user-specified query and do
 *License*:      BSD/MIT derivative &ndash; see the [LICENSE](LICENSE) file for more information
 
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg?style=flat-square)](https://choosealicense.com/licenses/bsd-3-clause)
-[![Python](https://img.shields.io/badge/Python-3.4+-brightgreen.svg?style=flat-square)](http://shields.io)
-[![Latest release](https://img.shields.io/badge/Latest_release-1.0.3-b44e88.svg?style=flat-square)](http://shields.io)
+[![Python](https://img.shields.io/badge/Python-3.4+-brightgreen.svg?style=flat-square)](https://www.python.org/downloads/release/python-350/)
+[![Latest release](https://img.shields.io/badge/Latest_release-1.0.3-b44e88.svg?style=flat-square)](http://github.com/caltechlibrary/martian)
 
 
 Table of Contents
@@ -28,7 +28,7 @@ Table of Contents
 ☀ Introduction
 -----------------------------
 
-Caltech's librarians occasionally need to download large numbers of records from Caltech's TIND.io database.  Doing this through TIND's web interface is tedious because TIND.io does not provide a bulk download facility.  _Martian_ is a program to make this work easier.  It performs one simple task: run a query in caltech.tind.io and download all the results in MARC XML format to a file on the local computer.
+Caltech's librarians occasionally need to download large numbers of records from Caltech's TIND.io database.  Doing this through TIND's web interface is tedious because TIND.io does not provide a bulk download facility.  Martian is a program to make this work easier.  It performs one simple task: run a query in caltech.tind.io and download all the results in MARC XML format to a file on the local computer.
 
 
 ✺ Installation
@@ -36,23 +36,29 @@ Caltech's librarians occasionally need to download large numbers of records from
 
 ### Using the normal installer program
 
-The developers provide an installer program for Caltech Library users.  Please contact the developers to get a copy of the installer program for Windows 7, Windows 10, or macOS 10.12+.  Note also that installation of _Martian_ on Windows requires administrator priviledges.
+The developers provide an installer program for Caltech Library users.  Please contact the developers to get a copy of the installer program for Windows 7, Windows 10, or macOS 10.12+.  Note also that installation of Martian on Windows requires administrator priviledges.
 
-To uninstall _Martian_ on a Windows 10 system, use the normal Windows **Add or remove programs** facility in the **Systems Settings** panel.
+To uninstall Martian on a Windows 10 system, use the normal Windows **Add or remove programs** facility in the **Systems Settings** panel.
 
 
 ### Using the source code repository
 
-Alternatively, you can also download the source code for Martian and run it directly using a Python interpreter.  The following is probably the simplest and most direct way to install this software on your computer:
+On **Linux**, **macOS**, and **Windows** operating systems, you should be able to install Martian directly from the GitHub repository using [pip](https://pip.pypa.io/en/stable/installing/).  If you don't have the `pip` package or are uncertain if you do, first run the following command in a terminal command line interpreter:
+
+```
+sudo python3 -m ensurepip
+```
+
+Then, install this software by running the following command on your computer:
 ```sh
-sudo python3 -m pip install git+https://github.com/caltechlibrary/martian.git --upgrade
+python3 -m pip install git+https://github.com/caltechlibrary/martian.git --user --upgrade 
 ```
 
 Alternatively, you can clone this GitHub repository and then run `setup.py`:
 ```sh
 git clone https://github.com/caltechlibrary/martian.git
 cd martian
-sudo python3 -m pip install . --upgrade
+python3 -m pip install . --user --upgrade
 ```
 
 If you install Martian in this way (from the sources), you may run into compatibility problems with the installation of the Python `pycurl` package.  Some notes and tips about installation can be found in the [wiki for Martian](https://github.com/caltechlibrary/martian/wiki).
@@ -98,7 +104,7 @@ If given the `-t` option (`/t` on Windows), it will only fetch and process a tot
 
 If given an output file using the `-o` option (`/o` on Windows), the results will be written to that file.  If no output file is specified, the output is written to a file named `output.xml` on the user's desktop.  The results are always MARC records in XML format.
 
-If given the `-Z` option (`/Z` on Windows), this program will print a trace of what it is doing to the terminal window, and will also drop into a debugger upon the occurrence of any errors.  This can be useful for debugging.  The option `-C` (`/C` on Windows) is useful when running with `-Z` to avoid the default behavior of color-coding the output, so that the combination of debugging messages and normal messages is more easily readable.
+If given the `-@` argument (`/@` on Windows), this program will output a detailed trace of what it is doing to the terminal window, and will also drop into a debugger upon the occurrence of any errors.  The debug trace will be sent to the given destination, which can be `-` to indicate console output, or a file path to send the output to a file.
 
 If given the `-V` option (`/V` on Windows), this program will print version information and exit without doing anything else.
 
@@ -142,7 +148,7 @@ Copyright (C) 2019, Caltech.  This software is freely distributed under a BSD/MI
 
 The [vector artwork](https://thenounproject.com/search/?q=martian&i=63049) of an alien spaceship used as a starting point for the logo for this repository was created by [Gonzalo Bravo](https://thenounproject.com/webposible/) for the [Noun Project](https://thenounproject.com).  It is licensed under the Creative Commons [Attribution 3.0 Unported](https://creativecommons.org/licenses/by/3.0/deed.en) license.  The vector graphics was modified by Mike Hucka to change the color.
 
-_Martian_ makes use of numerous open-source packages, without which it would have been effectively impossible to develop _Martian_ with the resources we had.  We want to acknowledge this debt.  In alphabetical order, the packages are:
+Martian makes use of numerous open-source packages, without which it would have been effectively impossible to develop Martian with the resources we had.  We want to acknowledge this debt.  In alphabetical order, the packages are:
 
 * [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/) &ndash; an HTML parsing library
 * [certifi](https://github.com/certifi/python-certifi) &ndash; Root Certificates for validating the trustworthiness of SSL certificates
