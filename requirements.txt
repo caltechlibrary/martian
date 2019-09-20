@@ -5,6 +5,7 @@ colorama>=0.3.9
 halo>=0.0.18
 humanize>=0.5.1
 lxml>=4.2.5
+pathlib2>=2.3.4
 plac>=1.0.0
 pycurl>=7.43.0.2
 requests>=2.21.0
