@@ -81,18 +81,18 @@ from martian.tind import Tind
 # ......................................................................
 
 @plac.annotations(
-    output     = ('write results to the file R',                    'option', 'o'),
-    start_at   = ("start with Nth record (default: start at 1)",    'option', 's'),
-    total      = ('stop after processing M records (default: all)', 'option', 't'),
-    no_color   = ('do not color-code terminal output',              'flag',   'C'),
-    no_gui     = ('do not start the GUI interface (default: do)',   'flag',   'G'),
-    version    = ('print version info and exit',                    'flag',   'V'),
-    debug      = ('turn on debugging',                              'flag',   'Z'),
+    output     = ('write results to the file R',                      'option', 'o'),
+    start_at   = ("start with Nth record (default: start at 1)",      'option', 's'),
+    total      = ('stop after processing M records (default: all)',   'option', 't'),
+    no_color   = ('do not color-code terminal output',                'flag',   'C'),
+    no_gui     = ('do not start the GUI interface (default: do)',     'flag',   'G'),
+    version    = ('print version info and exit',                      'flag',   'V'),
+    debug      = ('catch exceptions; also send debug trace to "out"', 'option', '@'),
     search     = 'search string or complete search URL (default: none)',
 )
 
 def main(output = 'O', start_at = 'N', total = 'M', no_color = False,
-         no_gui = False, version = False, debug = False, *search):
+         no_gui = False, version = False, debug = 'out', *search):
     '''Search caltech.tind.io and download the results as MARC XML records.
 
 Martian can be run as either a command-line application or a GUI application.
@@ -122,12 +122,11 @@ be written to that file.  If no output file is specified, the output is
 written to a file named "output.xml" on the user's desktop.  The results are
 always MARC records in XML format.
 
-If given the -Z option (/Z on Windows), this program will print a trace of
-what it is doing to the terminal window, and will also drop into a debugger
-upon the occurrence of any errors.  This can be useful for debugging.
-The option -C (/C on Windows) is useful when running with -Z to avoid the
-default behavior of color-coding the output, so that the combination of
-debugging messages and normal messages is more easily readable.
+If given the -@ argument (/@ on Windows), this program will output a detailed
+trace of what it is doing to the terminal window, and will also drop into a
+debugger upon the occurrence of any errors.  The debug trace will be sent to
+the given destination, which can be '-' to indicate console output, or a file
+path to send the output to a file.
 
 If given the -V option (/V on Windows), this program will print version
 information and exit without doing anything else.
@@ -151,8 +150,8 @@ message and exit without doing anything else.
         sys.exit()
 
     # Configure debug logging if it's turned on.
-    if debug:
-        set_debug(True)
+    if debug != 'out':
+        set_debug(True, debug)
 
     # We use default values that provide more intuitive help text printed by
     # plac.  Rewrite the values to things we actually use.
