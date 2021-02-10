@@ -51,8 +51,8 @@ Michael Hucka <mhucka@caltech.edu> -- Caltech Library
 Copyright
 ---------
 
-Copyright (c) 2019 by the California Institute of Technology.  This code is
-open-source software released under a 3-clause BSD license.  Please see the
+Copyright (c) 2019-2021 by the California Institute of Technology.  This code
+is open-source software released under a 3-clause BSD license.  Please see the
 file "LICENSE" for more information.
 '''
 
@@ -69,10 +69,12 @@ from   threading import Thread
 from   time import sleep
 import webbrowser
 
+if __debug__:
+    from sidetrack import log, logr
+
 import martian
 from martian.files import datadir_path, readable
 from martian.exceptions import *
-from martian.debug import log
 from martian.logo import getMartianLogoIcon
 
 
