@@ -9,8 +9,8 @@ Michael Hucka <mhucka@caltech.edu> -- Caltech Library
 Copyright
 ---------
 
-Copyright (c) 2019 by the California Institute of Technology.  This code is
-open-source software released under a 3-clause BSD license.  Please see the
+Copyright (c) 2019-2021 by the California Institute of Technology.  This code
+is open-source software released under a 3-clause BSD license.  Please see the
 file "LICENSE" for more information.
 '''
 
@@ -29,8 +29,10 @@ try:
 except ImportError:
     from StringIO import StringIO as BytesIO
 
+if __debug__:
+    from sidetrack import log, logr
+
 import martian
-from martian.debug import log
 from martian.exceptions import *
 from martian.network import net
 

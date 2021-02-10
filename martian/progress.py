@@ -9,8 +9,8 @@ Michael Hucka <mhucka@caltech.edu> -- Caltech Library
 Copyright
 ---------
 
-Copyright (c) 2018 by the California Institute of Technology.  This code is
-open-source software released under a 3-clause BSD license.  Please see the
+Copyright (c) 2018-2021 by the California Institute of Technology.  This code
+is open-source software released under a 3-clause BSD license.  Please see the
 file "LICENSE" for more information.
 '''
 
@@ -29,10 +29,12 @@ try:
 except:
     pass
 
+if __debug__:
+    from sidetrack import log, logr
+
 import martian
 from martian.exceptions import *
 from martian.messages import color, msg
-from martian.debug import log
 
 
 # Exported classes.

@@ -9,8 +9,8 @@ Michael Hucka <mhucka@caltech.edu> -- Caltech Library
 Copyright
 ---------
 
-Copyright (c) 2018 by the California Institute of Technology.  This code is
-open-source software released under a 3-clause BSD license.  Please see the
+Copyright (c) 2018-2021 by the California Institute of Technology.  This code
+is open-source software released under a 3-clause BSD license.  Please see the
 file "LICENSE" for more information.
 '''
 
@@ -29,7 +29,9 @@ from   urllib.parse import urlsplit
 import urllib3
 import warnings
 
-from .debug import log
+if __debug__:
+    from sidetrack import log, logr
+
 from .exceptions import *
 
 

@@ -30,10 +30,10 @@ be written to that file.  If no output file is specified, the output is
 written to a file named "output.xml" on the user's desktop.  The results are
 always MARC records in XML format.
 
-If given the -Z option (/Z on Windows), this program will print a trace of
+If given the -@ option (/@ on Windows), this program will print a trace of
 what it is doing to the terminal window, and will also drop into a debugger
 upon the occurrence of any errors.  This can be useful for debugging.
-The option -C (/C on Windows) is useful when running with -Z to avoid the
+The option -C (/C on Windows) is useful when running with -@ to avoid the
 default behavior of color-coding the output, so that the combination of
 debugging messages and normal messages is more easily readable.
 
@@ -51,8 +51,8 @@ Michael Hucka <mhucka@caltech.edu> -- Caltech Library
 Copyright
 ---------
 
-Copyright (c) 2019 by the California Institute of Technology.  This code is
-open-source software released under a 3-clause BSD license.  Please see the
+Copyright (c) 2019-2021 by the California Institute of Technology.  This code
+is open-source software released under a 3-clause BSD license.  Please see the
 file "LICENSE" for more information.
 '''
 
@@ -66,9 +66,11 @@ from   threading import Thread
 import traceback
 import wx
 
+if __debug__:
+    from sidetrack import set_debug, log, logr
+
 import martian
 from martian.control import MartianControlGUI, MartianControlCLI
-from martian.debug import set_debug, log
 from martian.exceptions import *
 from martian.files import desktop_path, rename_existing, file_in_use
 from martian.messages import MessageHandlerGUI, MessageHandlerCLI
@@ -176,14 +178,14 @@ message and exit without doing anything else.
 
     # Start the worker thread.
     if __debug__: log('starting main body thread')
-    controller.run(MainBody(output, total, start_at, search, debug,
+    controller.run(MainBody(output, int(total), int(start_at), search,
                             controller, notifier, tracer))
 
 
 class MainBody(Thread):
     '''Main body of Martian implemented as a Python thread.'''
 
-    def __init__(self, output, total, start_at, search, debug,
+    def __init__(self, output, total, start_at, search,
                  controller, notifier, tracer):
         '''Initializes main thread object but does not start the thread.'''
         Thread.__init__(self, name = "MainBody")
@@ -195,7 +197,6 @@ class MainBody(Thread):
         self._total       = total
         self._start_at    = start_at
         self._search      = search
-        self._debug       = debug
         self._controller  = controller
         self._tracer      = tracer
         self._notifier    = notifier
@@ -211,7 +212,6 @@ class MainBody(Thread):
         total       = self._total
         start_at    = self._start_at
         search      = self._search
-        debug       = self._debug
         controller  = self._controller
         notifier    = self._notifier
         tracer      = self._tracer
@@ -271,8 +271,6 @@ class MainBody(Thread):
             tracer.stop('Stopping due to a problem connecting to services')
             controller.quit()
         except Exception as err:
-            if debug:
-                import pdb; pdb.set_trace()
             tracer.stop('Stopping due to error')
             notifier.fatal(martian.__title__ + ' encountered an error',
                            str(err) + '\n' + traceback.format_exc())
