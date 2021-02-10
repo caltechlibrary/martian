@@ -247,12 +247,12 @@ class MartianMainFrame(wx.Frame):
         self.outermost_sizer.Add(self.headline, 0, wx.ALIGN_CENTER, 0)
         self.outermost_sizer.AddSpacer(5)
         if not sys.platform.startswith('win'):
-            self.outermost_sizer.Add(self.divider1, 0, wx.EXPAND | wx.ALIGN_CENTER_VERTICAL, 0)
+            self.outermost_sizer.Add(self.divider1, 0, wx.EXPAND, 0)
             self.outermost_sizer.AddSpacer(5)
         self.outermost_sizer.Add(self.text_area, 0, wx.EXPAND, 0)
         self.outermost_sizer.AddSpacer(5)
         if not sys.platform.startswith('win'):
-            self.outermost_sizer.Add(self.divider2, 0, wx.EXPAND | wx.ALIGN_CENTER_VERTICAL, 0)
+            self.outermost_sizer.Add(self.divider2, 0, wx.EXPAND, 0)
             self.outermost_sizer.AddSpacer(5)
         self.outermost_sizer.Add(self.quit_button, 0, wx.BOTTOM | wx.CENTER, 0)
         self.outermost_sizer.AddSpacer(5)
@@ -405,13 +405,13 @@ class UserDialog(wx.Dialog):
 
     def __do_layout(self):
         self.user_dialog_sizer = wx.FlexGridSizer(2, 2, 5, 0)
-        self.user_dialog_sizer.Add(self.search_label, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL, 0)
+        self.user_dialog_sizer.Add(self.search_label, 0, wx.ALIGN_RIGHT, 0)
         self.padding_sizer = wx.BoxSizer(wx.HORIZONTAL)
         if not sys.platform.startswith('win'):
             self.padding_sizer.AddSpacer(5)
         self.padding_sizer.Add(self.search, 0, wx.ALIGN_LEFT | wx.EXPAND, 0)
         self.user_dialog_sizer.Add(self.padding_sizer, 0, wx.ALIGN_LEFT | wx.FIXED_MINSIZE, 0)
-        self.user_dialog_sizer.Add(self.output_label, 0, wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL, 0)
+        self.user_dialog_sizer.Add(self.output_label, 0, wx.ALIGN_RIGHT, 0)
         self.user_dialog_sizer.Add(self.output, 0, wx.ALIGN_BOTTOM | wx.FIXED_MINSIZE, 0)
 
         self.button_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -425,11 +425,11 @@ class UserDialog(wx.Dialog):
         self.outermost_sizer.Add((420, 5), 0, wx.ALIGN_CENTER, 0)
         self.outermost_sizer.Add(self.explanation, 0, wx.ALIGN_CENTER, 0)
         self.outermost_sizer.Add((420, 5), 0, wx.ALIGN_CENTER, 0)
-        self.outermost_sizer.Add(self.top_line, 0, wx.EXPAND | wx.ALIGN_CENTER_VERTICAL, 0)
+        self.outermost_sizer.Add(self.top_line, 0, wx.EXPAND, 0)
         self.outermost_sizer.Add((420, 8), 0, wx.ALIGN_CENTER, 0)
         self.outermost_sizer.Add(self.user_dialog_sizer, 1, wx.ALIGN_CENTER | wx.FIXED_MINSIZE, 5)
         self.outermost_sizer.Add((420, 5), 0, 0, 0)
-        self.outermost_sizer.Add(self.bottom_line, 0, wx.EXPAND | wx.ALIGN_CENTER_VERTICAL, 0)
+        self.outermost_sizer.Add(self.bottom_line, 0, wx.EXPAND, 0)
         self.outermost_sizer.Add((420, 5), 0, 0, 0)
         self.outermost_sizer.Add(self.button_sizer, 1, wx.ALIGN_RIGHT, 0)
         self.outermost_sizer.Add((420, 5), 0, wx.ALIGN_CENTER, 0)
