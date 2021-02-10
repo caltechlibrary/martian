@@ -8,8 +8,8 @@ _Martian_ searches Caltech's TIND.io database with a user-specified query and do
 *License*:      BSD/MIT derivative &ndash; see the [LICENSE](LICENSE) file for more information
 
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg?style=flat-square)](https://choosealicense.com/licenses/bsd-3-clause)
-[![Python](https://img.shields.io/badge/Python-3.4+-brightgreen.svg?style=flat-square)](https://www.python.org/downloads/release/python-350/)
-[![Latest release](https://img.shields.io/badge/Latest_release-1.0.3-b44e88.svg?style=flat-square)](http://github.com/caltechlibrary/martian)
+[![Python](https://img.shields.io/badge/Python-3.8+-brightgreen.svg?style=flat-square)](https://www.python.org/downloads/release/python-380/)
+[![Latest release](https://img.shields.io/badge/Latest_release-1.0.4-b44e88.svg?style=flat-square)](http://github.com/caltechlibrary/martian)
 
 
 Table of Contents
@@ -104,7 +104,7 @@ If given the `-t` option (`/t` on Windows), it will only fetch and process a tot
 
 If given an output file using the `-o` option (`/o` on Windows), the results will be written to that file.  If no output file is specified, the output is written to a file named `output.xml` on the user's desktop.  The results are always MARC records in XML format.
 
-If given the `-@` argument (`/@` on Windows), this program will output a detailed trace of what it is doing to the terminal window, and will also drop into a debugger upon the occurrence of any errors.  The debug trace will be sent to the given destination, which can be `-` to indicate console output, or a file path to send the output to a file.
+If given the `-@` argument (`/@` on Windows), this program will output a detailed trace of what it is doing, and will also drop into a debugger upon the occurrence of any errors.  The debug trace will be written to the given destination, which can be `-` to indicate console output, or a file path to send the output to a file.
 
 If given the `-V` option (`/V` on Windows), this program will print version information and exit without doing anything else.
 
@@ -134,7 +134,7 @@ We would be happy to receive your help and participation with enhancing Martian!
 ☮︎ License
 ---------
 
-Copyright (C) 2019, Caltech.  This software is freely distributed under a BSD/MIT type license.  Please see the [LICENSE](LICENSE) file for more information.
+Copyright (C) 2019-2021, Caltech.  This software is freely distributed under a BSD/MIT type license.  Please see the [LICENSE](LICENSE) file for more information.
 
 
 ❡ Authors and history
