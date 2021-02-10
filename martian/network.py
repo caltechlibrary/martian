@@ -29,7 +29,9 @@ from   urllib.parse import urlsplit
 import urllib3
 import warnings
 
-from .debug import log
+if __debug__:
+    from sidetrack import log, logr
+
 from .exceptions import *
 
 

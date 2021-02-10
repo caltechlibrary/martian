@@ -20,8 +20,10 @@ import sys
 import subprocess
 import webbrowser
 
+if __debug__:
+    from sidetrack import log, logr
+
 import martian
-from martian.debug import log
 
 
 # Constants.

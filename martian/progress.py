@@ -29,10 +29,12 @@ try:
 except:
     pass
 
+if __debug__:
+    from sidetrack import log, logr
+
 import martian
 from martian.exceptions import *
 from martian.messages import color, msg
-from martian.debug import log
 
 
 # Exported classes.
